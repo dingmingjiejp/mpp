@@ -1,0 +1,8 @@
+Q: Does it make sense to use inheritance here? Explain
+A: It make no sense.
+  Reason:
+    1. Only the radius attribute is available for subclass.
+    2. The height attribute and the computeVolume operation inherited from super class
+    	make no sense for subclass.
+    3. When the height attribute of subclass are changed, the computeVolume operation of
+    	subclass will change output.
