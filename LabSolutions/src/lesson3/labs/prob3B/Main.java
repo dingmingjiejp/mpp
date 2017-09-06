@@ -1,4 +1,4 @@
-package lesson3.labsolns.prob3A;
+package lesson3.labs.prob3B;
 
 public class Main {
 

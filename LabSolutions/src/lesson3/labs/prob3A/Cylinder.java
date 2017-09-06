@@ -1,4 +1,4 @@
-package lesson3.labsolns.prob3A;
+package lesson3.labs.prob3A;
 
 public class Cylinder {
 	protected double radius;
