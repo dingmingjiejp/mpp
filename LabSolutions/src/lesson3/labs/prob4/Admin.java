@@ -1,15 +1,7 @@
 package lesson3.labs.prob4;
 
 public class Admin {
-	public static void main(String args[]) {
-		Condo c = new Condo(3);
-		House h = new House(2.5);
-		Trailer t = new Trailer();
-		Object[] properties = {c, h, t};
-		System.out.println(computeTotalRent(properties));
-	}
-
-	public static double computeTotalRent(Object[] properties) {
+		public static double computeTotalRent(Object[] properties) {
 		double totalRent = 0;
 		for (Object o : properties) {
 			if (o instanceof Building) {
