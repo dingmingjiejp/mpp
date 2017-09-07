@@ -4,6 +4,8 @@ public class PersonWithJob {
 	private double salary;
 	private Person person;
 
+	
+	
 	public double getSalary() {
 		return salary;
 	}
