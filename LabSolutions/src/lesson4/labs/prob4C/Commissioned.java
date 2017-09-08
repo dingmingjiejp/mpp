@@ -1,6 +1,7 @@
 package lesson4.labs.prob4C;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class Commissioned extends Employee{
@@ -20,8 +21,13 @@ public class Commissioned extends Employee{
 	public double calcGrossPay(int month, int year) {
 		// TODO Auto-generated method stub
 		double sum=0;
+		month--;
 		for (Order order:orderList)
-			sum+=order.orderAmount;
+		{
+			Date date=order.orderDate;
+			if (date.getYear()==year && date.getMonth()==month)
+				sum+=order.orderAmount;
+		}
 		return baseSalary+commission*sum;
 	}
 
