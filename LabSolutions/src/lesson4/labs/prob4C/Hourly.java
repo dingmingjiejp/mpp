@@ -13,7 +13,6 @@ public class Hourly extends Employee{
 	}
 	@Override
 	public double calcGrossPay(int month, int year) {
-		// TODO Auto-generated method stub
 		return hoursPerWeek*hourlyWage;
 	}
 
