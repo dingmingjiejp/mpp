@@ -575,7 +575,7 @@
 													},
 													"edgePosition": 1,
 													"underline": false,
-													"text": "1 : calcCompensation(month,year)",
+													"text": "1 : * calcCompensation(month,year)",
 													"horizontalAlignment": 2,
 													"verticalAlignment": 5,
 													"wordWrap": false
@@ -2435,7 +2435,7 @@
 													},
 													"edgePosition": 1,
 													"underline": false,
-													"text": "6 : createPayCheck(grossPay)",
+													"text": "6 : PayCheck(grossPay)",
 													"horizontalAlignment": 2,
 													"verticalAlignment": 5,
 													"wordWrap": false
@@ -2734,6 +2734,147 @@
 											},
 											"showProperty": true,
 											"showType": true
+										},
+										{
+											"_type": "UMLNoteView",
+											"_id": "AAAAAAFeX1y0enHXNec=",
+											"_parent": {
+												"$ref": "AAAAAAFeXm7SSS63vDU="
+											},
+											"visible": true,
+											"enabled": true,
+											"lineColor": "#000000",
+											"fillColor": "#ffffff",
+											"fontColor": "#000000",
+											"font": "Arial;13;0",
+											"showShadow": true,
+											"containerChangeable": false,
+											"containerExtending": false,
+											"left": 288,
+											"top": 128,
+											"width": 76.3671875,
+											"height": 64,
+											"autoResize": false,
+											"text": "if employee is Hourly",
+											"wordWrap": true
+										},
+										{
+											"_type": "UMLNoteLinkView",
+											"_id": "AAAAAAFeX11rcnHfzRY=",
+											"_parent": {
+												"$ref": "AAAAAAFeXm7SSS63vDU="
+											},
+											"visible": true,
+											"enabled": true,
+											"lineColor": "#000000",
+											"fillColor": "#ffffff",
+											"fontColor": "#000000",
+											"font": "Arial;13;0",
+											"showShadow": true,
+											"containerChangeable": false,
+											"containerExtending": false,
+											"head": {
+												"$ref": "AAAAAAFeXoAvWDA6MBM="
+											},
+											"tail": {
+												"$ref": "AAAAAAFeX1y0enHXNec="
+											},
+											"lineStyle": 1,
+											"points": "324:192;322:240"
+										},
+										{
+											"_type": "UMLNoteView",
+											"_id": "AAAAAAFeX12CwCSoOck=",
+											"_parent": {
+												"$ref": "AAAAAAFeXm7SSS63vDU="
+											},
+											"visible": true,
+											"enabled": true,
+											"lineColor": "#000000",
+											"fillColor": "#ffffff",
+											"fontColor": "#000000",
+											"font": "Arial;13;0",
+											"showShadow": true,
+											"containerChangeable": false,
+											"containerExtending": false,
+											"left": 136,
+											"top": 240,
+											"width": 76.3671875,
+											"height": 64,
+											"autoResize": false,
+											"text": "if employee is Salaried",
+											"wordWrap": true
+										},
+										{
+											"_type": "UMLNoteLinkView",
+											"_id": "AAAAAAFeX13ApXHnRvw=",
+											"_parent": {
+												"$ref": "AAAAAAFeXm7SSS63vDU="
+											},
+											"visible": true,
+											"enabled": true,
+											"lineColor": "#000000",
+											"fillColor": "#ffffff",
+											"fontColor": "#000000",
+											"font": "Arial;13;0",
+											"showShadow": true,
+											"containerChangeable": false,
+											"containerExtending": false,
+											"head": {
+												"$ref": "AAAAAAFeXoFMijBXgGk="
+											},
+											"tail": {
+												"$ref": "AAAAAAFeX12CwCSoOck="
+											},
+											"lineStyle": 1,
+											"points": "212:277;386:305"
+										},
+										{
+											"_type": "UMLNoteView",
+											"_id": "AAAAAAFeX13X4iSpt40=",
+											"_parent": {
+												"$ref": "AAAAAAFeXm7SSS63vDU="
+											},
+											"visible": true,
+											"enabled": true,
+											"lineColor": "#000000",
+											"fillColor": "#ffffff",
+											"fontColor": "#000000",
+											"font": "Arial;13;0",
+											"showShadow": true,
+											"containerChangeable": false,
+											"containerExtending": false,
+											"left": 568,
+											"top": 280,
+											"width": 105.97265625,
+											"height": 64,
+											"autoResize": false,
+											"text": "if employee is Commissioned",
+											"wordWrap": true
+										},
+										{
+											"_type": "UMLNoteLinkView",
+											"_id": "AAAAAAFeX14dKXHv3Sk=",
+											"_parent": {
+												"$ref": "AAAAAAFeXm7SSS63vDU="
+											},
+											"visible": true,
+											"enabled": true,
+											"lineColor": "#000000",
+											"fillColor": "#ffffff",
+											"fontColor": "#000000",
+											"font": "Arial;13;0",
+											"showShadow": true,
+											"containerChangeable": false,
+											"containerExtending": false,
+											"head": {
+												"$ref": "AAAAAAFeXoGYHjBuiqg="
+											},
+											"tail": {
+												"$ref": "AAAAAAFeX13X4iSpt40="
+											},
+											"lineStyle": 1,
+											"points": "567:333;460:378"
 										}
 									],
 									"showSequenceNumber": true,
@@ -2750,7 +2891,7 @@
 									"_parent": {
 										"$ref": "AAAAAAFeXm7SSS62tQQ="
 									},
-									"name": "calcCompensation",
+									"name": "* calcCompensation",
 									"source": {
 										"$ref": "AAAAAAFeXnQioS9V5O8="
 									},
@@ -2839,7 +2980,7 @@
 									"_parent": {
 										"$ref": "AAAAAAFeXm7SSS62tQQ="
 									},
-									"name": "createPayCheck",
+									"name": "PayCheck",
 									"source": {
 										"$ref": "AAAAAAFeXnB/mi7FHkM="
 									},
