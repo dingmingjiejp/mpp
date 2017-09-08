@@ -7,6 +7,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+
 @SuppressWarnings("serial")
 public class MainFrame extends JFrame {
 	CDWindow cdWin = new CDWindow();
@@ -20,9 +21,9 @@ public class MainFrame extends JFrame {
 		mainPanel.add(cdButton);
 		mainPanel.add(bookButton);
 		getContentPane().add(mainPanel);
-		pack();		
+		pack();
 	}
-	
+
 	class CDWindowListener implements ActionListener {
 		public void actionPerformed(ActionEvent evt){
 			cdWin.setVisible(true);
@@ -35,7 +36,7 @@ public class MainFrame extends JFrame {
 			bookWin.setVisible(true);
 		}
 	}
-	
+
 	public static void main(String[] args) {
 		(new MainFrame()).setVisible(true);
 	}

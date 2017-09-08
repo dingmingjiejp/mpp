@@ -17,6 +17,10 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import lesson5.labs.prob1.rulesets.CDRuleSet;
+import lesson5.labs.prob1.rulesets.RuleException;
+import lesson5.labs.prob1.rulesets.RuleSetFactory;
+
 
 public class CDWindow extends JFrame {
 	private JPanel topPanel;
@@ -35,6 +39,7 @@ public class CDWindow extends JFrame {
 		mainPanel.add(topPanel, BorderLayout.NORTH);
 		mainPanel.add(bottomPanel, BorderLayout.SOUTH);
 		getContentPane().add(mainPanel);
+		RuleSetFactory.addRule(this, new CDRuleSet());
 		pack();
 	}
 	private void defineTopPanel() {
@@ -43,46 +48,46 @@ public class CDWindow extends JFrame {
 		artistLabel.setFont(makeSmallFont(artistLabel.getFont()));
 		artistField = new JTextField(12);
 		JPanel isbnPanel = createTextPanel(artistLabel, artistField);
-		
-		
+
+
 		JLabel titleLabel = new JLabel("Title");
 		titleLabel.setFont(makeSmallFont(titleLabel.getFont()));
 		titleField = new JTextField(12);
 		JPanel titlePanel = createTextPanel(titleLabel, titleField);
-		
+
 		JLabel priceLabel = new JLabel("Price");
 		priceLabel.setFont(makeSmallFont(priceLabel.getFont()));
 		priceField = new JTextField(12);
 		JPanel pricePanel = createTextPanel(priceLabel, priceField);
-		
-		
-		
+
+
+
 		topPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
 		topPanel.add(isbnPanel);
 		topPanel.add(titlePanel);
 		topPanel.add(pricePanel);
-		
+
 	}
-	
+
 	private void defineBottomPanel() {
 		bottomPanel = new JPanel();
 		bottomPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
 		button = new JButton("Update Info");
 		button.addActionListener(new ButtonListener());
 		bottomPanel.add(button);
-		
+
 	}
 	private static JPanel createTextPanel(JLabel lab, JTextField textField) {
-		
+
 		JPanel top = new JPanel();
 		JPanel bottom = new JPanel();
 		top.setLayout(new FlowLayout(FlowLayout.LEFT,5,0));
-		bottom.setLayout(new FlowLayout(FlowLayout.LEFT,5,0));		
-		
-		
+		bottom.setLayout(new FlowLayout(FlowLayout.LEFT,5,0));
+
+
 		top.add(lab);
 		bottom.add(textField);
-		
+
 		JPanel textPanel = new JPanel();
 		textPanel.setLayout(new BorderLayout());
 		textPanel.add(top,BorderLayout.NORTH);
@@ -90,7 +95,7 @@ public class CDWindow extends JFrame {
 		return textPanel;
 	}
 	private void initializeWindow() {
-		setTitle("Add CD to Collection");		
+		setTitle("Add CD to Collection");
 		setSize(520,180);
 		handleWindowClosing();
 		centerFrameOnDesktop(this);
@@ -106,7 +111,7 @@ public class CDWindow extends JFrame {
                 dispose();
                 System.exit(0);
            }
-        }); 				
+        });
 	}
 	private void clearFields() {
 		artistField.setText("");
@@ -115,12 +120,19 @@ public class CDWindow extends JFrame {
 	}
 	class ButtonListener implements ActionListener {
 		public void actionPerformed(ActionEvent evt){
-			JOptionPane.showMessageDialog(CDWindow.this, "Still need to check CD rules!");
+			try {
+				RuleSetFactory.getRule(CDWindow.this.getClass()).applyRules(CDWindow.this);
+				JOptionPane.showMessageDialog(CDWindow.this, "Data is added successfully!");
+				clearFields();
+			} catch (RuleException e) {
+				JOptionPane.showMessageDialog(CDWindow.this, e.getMessage());
+			};
+//			JOptionPane.showMessageDialog(CDWindow.this, "Still need to check CD rules!");
 		}
 	}
 	class BackListener implements ActionListener {
 		public void actionPerformed(ActionEvent evt){
-			
+
 		}
 	}
 	public static void centerFrameOnDesktop(Component f) {
@@ -130,7 +142,7 @@ public class CDWindow extends JFrame {
 	        int width  = toolkit.getScreenSize().width;
 	        int frameHeight = f.getSize().height;
 	        int frameWidth  = f.getSize().width;
-	        f.setLocation(((width-frameWidth)/2)-SHIFT_AMOUNT, (height-frameHeight)/3);    
+	        f.setLocation(((width-frameWidth)/2)-SHIFT_AMOUNT, (height-frameHeight)/3);
 	    }
 	public String getArtistValue() {
 		return artistField.getText();
@@ -141,7 +153,7 @@ public class CDWindow extends JFrame {
 	public String getPriceValue() {
 		return priceField.getText();
 	}
-	
+
 	public static void main(String[] args){
 		CDWindow mf = new CDWindow();
 		//mf.pack();

@@ -17,6 +17,11 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import lesson5.labs.prob1.rulesets.BookRuleSet;
+import lesson5.labs.prob1.rulesets.CDRuleSet;
+import lesson5.labs.prob1.rulesets.RuleException;
+import lesson5.labs.prob1.rulesets.RuleSetFactory;
+
 
 public class BookWindow extends JFrame {
 	private JPanel topPanel;
@@ -35,6 +40,7 @@ public class BookWindow extends JFrame {
 		mainPanel.add(topPanel, BorderLayout.NORTH);
 		mainPanel.add(bottomPanel, BorderLayout.SOUTH);
 		getContentPane().add(mainPanel);
+		RuleSetFactory.addRule(this, new BookRuleSet());
 		pack();
 	}
 	private void defineTopPanel() {
@@ -43,46 +49,45 @@ public class BookWindow extends JFrame {
 		isbnLabel.setFont(makeSmallFont(isbnLabel.getFont()));
 		isbnField = new JTextField(12);
 		JPanel isbnPanel = createTextPanel(isbnLabel, isbnField);
-		
-		
+
+
 		JLabel titleLabel = new JLabel("Title");
 		titleLabel.setFont(makeSmallFont(titleLabel.getFont()));
 		titleField = new JTextField(12);
 		JPanel titlePanel = createTextPanel(titleLabel, titleField);
-		
+
 		JLabel priceLabel = new JLabel("Price");
 		priceLabel.setFont(makeSmallFont(priceLabel.getFont()));
 		priceField = new JTextField(12);
 		JPanel pricePanel = createTextPanel(priceLabel, priceField);
-		
-		
-		
+
+
 		topPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
 		topPanel.add(isbnPanel);
 		topPanel.add(titlePanel);
 		topPanel.add(pricePanel);
-		
+
 	}
-	
+
 	private void defineBottomPanel() {
 		bottomPanel = new JPanel();
 		bottomPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
 		button = new JButton("Update Info");
 		button.addActionListener(new ButtonListener());
 		bottomPanel.add(button);
-		
+
 	}
 	private static JPanel createTextPanel(JLabel lab, JTextField textField) {
-		
+
 		JPanel top = new JPanel();
 		JPanel bottom = new JPanel();
 		top.setLayout(new FlowLayout(FlowLayout.LEFT,5,0));
-		bottom.setLayout(new FlowLayout(FlowLayout.LEFT,5,0));		
-		
-		
+		bottom.setLayout(new FlowLayout(FlowLayout.LEFT,5,0));
+
+
 		top.add(lab);
 		bottom.add(textField);
-		
+
 		JPanel textPanel = new JPanel();
 		textPanel.setLayout(new BorderLayout());
 		textPanel.add(top,BorderLayout.NORTH);
@@ -90,7 +95,7 @@ public class BookWindow extends JFrame {
 		return textPanel;
 	}
 	private void initializeWindow() {
-		setTitle("Add Book to Collection");		
+		setTitle("Add Book to Collection");
 		setSize(520,180);
 		handleWindowClosing();
 		centerFrameOnDesktop(this);
@@ -107,7 +112,7 @@ public class BookWindow extends JFrame {
 				//other clean-up
                 System.exit(0);
            }
-        }); 				
+        });
 	}
 	private void clearFields() {
 		isbnField.setText("");
@@ -116,12 +121,19 @@ public class BookWindow extends JFrame {
 	}
 	class ButtonListener implements ActionListener {
 		public void actionPerformed(ActionEvent evt){
-			JOptionPane.showMessageDialog(BookWindow.this, "Still need to check book rules!");
+			try {
+				RuleSetFactory.getRule(BookWindow.this.getClass()).applyRules(BookWindow.this);
+				JOptionPane.showMessageDialog(BookWindow.this, "Data is added successfully!");
+				clearFields();
+			} catch (RuleException e) {
+				JOptionPane.showMessageDialog(BookWindow.this, e.getMessage());
+			};
+//			JOptionPane.showMessageDialog(BookWindow.this, "Still need to check book rules!");
 		}
 	}
 	class BackListener implements ActionListener {
 		public void actionPerformed(ActionEvent evt){
-			
+
 		}
 	}
 	public static void centerFrameOnDesktop(Component f) {
@@ -131,7 +143,7 @@ public class BookWindow extends JFrame {
 	        int width  = toolkit.getScreenSize().width;
 	        int frameHeight = f.getSize().height;
 	        int frameWidth  = f.getSize().width;
-	        f.setLocation(((width-frameWidth)/2)-SHIFT_AMOUNT, (height-frameHeight)/3);    
+	        f.setLocation(((width-frameWidth)/2)-SHIFT_AMOUNT, (height-frameHeight)/3);
 	    }
 	public String getIsbnValue() {
 		return isbnField.getText();
@@ -142,7 +154,7 @@ public class BookWindow extends JFrame {
 	public String getPriceValue() {
 		return priceField.getText();
 	}
-	
+
 	public static void main(String[] args){
 		BookWindow mf = new BookWindow();
 		//mf.pack();
