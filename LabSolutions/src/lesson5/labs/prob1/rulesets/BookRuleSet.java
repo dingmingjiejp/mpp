@@ -28,38 +28,33 @@ public class BookRuleSet implements RuleSet {
 				w.getPriceValue().trim().equals("")) {
 			throw new RuleException("All fields must be nonempty");
 		}
+		boolean match;
 
-		String decimalPattern = "([0-9]{10,13})";
-		boolean match = Pattern.matches(decimalPattern, w.getIsbnValue());
+		match = Pattern.matches("^([0-9]{10})|([0-9]{13})$", w.getIsbnValue());
 		if(match == false){
 			throw new RuleException("Isbn must be numeric and consist of either 10 or 13 characters");
 		} else {
-			decimalPattern = "([0-9]{10})";
-			match = Pattern.matches(decimalPattern, w.getIsbnValue());
+			match = Pattern.matches("^[0-9]{10}$", w.getIsbnValue());
 
 			if(match == true){
-				decimalPattern = "([01][0-9]{9})";
-				match = Pattern.matches(decimalPattern, w.getIsbnValue());
+				match = Pattern.matches("^[01][0-9]{9}$", w.getIsbnValue());
 				if(match == false){
 					throw new RuleException("If Isbn has length 10, the first digit must be 0 or 1");
 				}
-			}
+			} else {
+				match = Pattern.matches("^[0-9]{13}$", w.getIsbnValue());
 
-			decimalPattern = "([0-9]{13})";
-			match = Pattern.matches(decimalPattern, w.getIsbnValue());
-
-			if(match == true){
-				decimalPattern = "(978|979)([0-9]{10})";
-				match = Pattern.matches(decimalPattern, w.getIsbnValue());
-				if(match == false){
-					throw new RuleException("If Isbn has length 13, the first 3 digits must be either 978 or 979");
+				if(match == true){
+					match = Pattern.matches("^(978|979)[0-9]{10}$", w.getIsbnValue());
+					if(match == false){
+						throw new RuleException("If Isbn has length 13, the first 3 digits must be either 978 or 979");
+					}
 				}
 			}
 		}
 
 		if(!w.getPriceValue().trim().equals("")) {
-			decimalPattern = "^([0-9]*)\\.([0-9]{2})$";
-			match = Pattern.matches(decimalPattern, w.getPriceValue());
+			match = Pattern.matches("^([0-9]*)\\.([0-9]{2})$", w.getPriceValue());
 
 			if(match == false) {
 				throw new RuleException("Price must be a floating point number with two decimal places");

@@ -26,8 +26,7 @@ public class CDRuleSet implements RuleSet {
 		}
 
 		if(!w.getPriceValue().trim().equals("")) {
-			String decimalPattern = "([0-9]*)\\.([0-9]{2})";
-			boolean match = Pattern.matches(decimalPattern, w.getPriceValue());
+			boolean match = Pattern.matches("^([0-9]*)\\.([0-9]{2})$", w.getPriceValue());
 
 			if(match == false) {
 				throw new RuleException("Price must be a floating point number with two decimal places");

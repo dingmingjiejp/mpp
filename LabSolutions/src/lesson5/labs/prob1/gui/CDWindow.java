@@ -123,6 +123,7 @@ public class CDWindow extends JFrame {
 			try {
 				RuleSetFactory.getRule(CDWindow.this.getClass()).applyRules(CDWindow.this);
 				JOptionPane.showMessageDialog(CDWindow.this, "Data is added successfully!");
+				System.out.println("CD: " + getArtistValue() + " " + getTitleValue() + " " + getPriceValue());
 				clearFields();
 			} catch (RuleException e) {
 				JOptionPane.showMessageDialog(CDWindow.this, e.getMessage());

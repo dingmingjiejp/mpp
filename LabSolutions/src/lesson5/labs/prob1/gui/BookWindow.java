@@ -124,6 +124,7 @@ public class BookWindow extends JFrame {
 			try {
 				RuleSetFactory.getRule(BookWindow.this.getClass()).applyRules(BookWindow.this);
 				JOptionPane.showMessageDialog(BookWindow.this, "Data is added successfully!");
+				System.out.println("Book: " + getIsbnValue() + " " + getTitleValue() + " " + getPriceValue());
 				clearFields();
 			} catch (RuleException e) {
 				JOptionPane.showMessageDialog(BookWindow.this, e.getMessage());
