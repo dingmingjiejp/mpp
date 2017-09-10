@@ -3,8 +3,10 @@ package lesson6.labs.prob3;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -18,11 +20,19 @@ import javafx.stage.Stage;
 public class Login extends Application {
 
     public static void main(String[] args) {
-        launch(args);
+        //launch(args);
+        Application.launch(Login.class, args);
     }
 
     @Override
-    public void start(Stage primaryStage) {
+    public void start(Stage primaryStage) throws Exception {
+    	Parent root = FXMLLoader.load(getClass().getResource("Login.fxml"));
+
+    	primaryStage.setTitle("JavaFX Welcome");
+    	primaryStage.setScene(new Scene(root, 300, 275));
+    	primaryStage.show();
+		
+    	/*
         primaryStage.setTitle("JavaFX Welcome");
         GridPane grid = new GridPane();
         grid.setAlignment(Pos.CENTER);
@@ -71,6 +81,6 @@ public class Login extends Application {
         primaryStage.setScene(scene);
         
         scene.getStylesheets().add(getClass().getResource("Login.css").toExternalForm());
-        primaryStage.show();
+        primaryStage.show(); */
     }
 }
