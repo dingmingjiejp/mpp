@@ -70,6 +70,7 @@ public class OperationWindow extends  Stage implements LibWindow{
 		        checkOutIn.setMinSize(150, 20);
 		        checkOutIn.setAlignment(Pos.CENTER_LEFT);
 		        checkOutIn.setOnAction((e) -> {
+
 		        });
 		        hbLeft.getChildren().add(checkOutIn);
 	        }
@@ -81,6 +82,7 @@ public class OperationWindow extends  Stage implements LibWindow{
 		        addBookCopy.setMinSize(150, 20);
 		        addBookCopy.setAlignment(Pos.CENTER_LEFT);
 		        addBookCopy.setOnAction((e) -> {
+		        	Start.showAddACopyWindow();
 		        });
 
 		        Button addMemeber = new Button("Add member");
