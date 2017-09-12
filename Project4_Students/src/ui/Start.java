@@ -155,16 +155,7 @@ public class Start extends Application {
 					AddACopy.INSTANCE.init();
 				}
 				ControllerInterface ci = ControllerFactory.of();
-//				List<String> ids = ci.allMemberIds();
-//				Collections.sort(ids);
-//				System.out.println(ids);
-//				StringBuilder sb = new StringBuilder();
-//				for(String s: ids) {
-//					sb.append(s + "\n");
-//				}
-//				System.out.println(sb.toString());
-//				AddACopy.INSTANCE.setData(sb.toString());
-				HashMap<String, Book> books = ci.allBookList();
+				HashMap<String, Book> books = ci.getBooksMap();
 				AddACopy.INSTANCE.setBookData(books);
 				AddACopy.INSTANCE.show();
             }
