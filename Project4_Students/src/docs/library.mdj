@@ -19,7 +19,7 @@
 					},
 					"name": "business",
 					"visible": true,
-					"defaultDiagram": false,
+					"defaultDiagram": true,
 					"ownedViews": [
 						{
 							"_type": "UMLClassView",
@@ -10296,7 +10296,7 @@
 															"height": 13,
 															"autoResize": false,
 															"underline": false,
-															"text": "SystemController",
+															"text": "ControllerInterface",
 															"horizontalAlignment": 2,
 															"verticalAlignment": 5,
 															"wordWrap": false
@@ -11008,7 +11008,7 @@
 															"height": 13,
 															"autoResize": false,
 															"underline": false,
-															"text": "DataAccessFacade",
+															"text": "DataAccess",
 															"horizontalAlignment": 2,
 															"verticalAlignment": 5,
 															"wordWrap": false
@@ -11986,7 +11986,7 @@
 									"_parent": {
 										"$ref": "AAAAAAFed181l8+468c="
 									},
-									"name": "SystemController",
+									"name": "ControllerInterface",
 									"visibility": "public",
 									"represent": {
 										"$ref": "AAAAAAFed2CfptA0tQY="
@@ -11999,7 +11999,7 @@
 									"_parent": {
 										"$ref": "AAAAAAFed181l8+468c="
 									},
-									"name": "DataAccessFacade",
+									"name": "DataAccess",
 									"visibility": "public",
 									"represent": {
 										"$ref": "AAAAAAFed2Xtp9Ge1jI="
@@ -18015,7 +18015,6 @@
 							"visibility": "public",
 							"isStatic": false,
 							"isLeaf": false,
-							"type": "",
 							"isReadOnly": false,
 							"isOrdered": false,
 							"isUnique": false,
@@ -18033,7 +18032,6 @@
 							"visibility": "public",
 							"isStatic": false,
 							"isLeaf": false,
-							"type": "",
 							"isReadOnly": false,
 							"isOrdered": false,
 							"isUnique": false,
