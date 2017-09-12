@@ -44,7 +44,9 @@ public class Start extends Application {
 		AllMembersWindow.INSTANCE,
 		AllBooksWindow.INSTANCE,
 		AddACopy.INSTANCE,
-		OperationWindow.INSTANCE
+		OperationWindow.INSTANCE,
+
+		AddACopyWindow.INSTANCE
 	};
 
 	public static void hideAllWindows() {
@@ -67,12 +69,14 @@ public class Start extends Application {
 
 	public static void showAddACopyWindow() {
 		hideAllWindows();
-		if(!AddACopy.INSTANCE.isInitialized()) {
-//			AddACopy.INSTANCE.setData(controller.getCurrentUser(),
-//					controller.getBooksMap());
-			AddACopy.INSTANCE.init();
+		ControllerInterface controller = ControllerFactory.of();
+		if(!AddACopyWindow.INSTANCE.isInitialized()) {
+			AddACopyWindow.INSTANCE.setData(controller.getCurrentUser(),
+					controller.getBooksMap());
+			AddACopyWindow.INSTANCE.init();
 		}
-		AddACopy.INSTANCE.show();
+		AddACopyWindow.INSTANCE.refreshBookList();;
+		AddACopyWindow.INSTANCE.show();
 	}
 
 	@Override

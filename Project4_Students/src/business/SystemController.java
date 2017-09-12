@@ -59,4 +59,10 @@ public class SystemController implements ControllerInterface {
 		return booksMap;
 	}
 
+	@Override
+	public HashMap<String, Book> searchBooks(String isbn) {
+		DataAccess da = new DataAccessFacade();
+		HashMap<String, Book> retval = da.findBooksMap(isbn);
+		return retval;
+	}
 }

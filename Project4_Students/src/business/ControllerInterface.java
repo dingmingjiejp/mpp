@@ -12,5 +12,5 @@ public interface ControllerInterface {
 	public List<String> allBookIds();
 	public User getCurrentUser();
 	public HashMap<String, Book> getBooksMap();
-
+	public HashMap<String, Book> searchBooks(String isbn);
 }
