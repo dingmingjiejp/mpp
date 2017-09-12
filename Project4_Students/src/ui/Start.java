@@ -5,11 +5,9 @@ import java.util.HashMap;
 import java.util.List;
 
 import business.Book;
+import business.ControllerFactory;
 import business.ControllerInterface;
-import business.SystemController;
 import javafx.application.Application;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -26,7 +24,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
-import business.Book;
 
 public class Start extends Application {
 	public static void main(String[] args) {
@@ -46,7 +43,8 @@ public class Start extends Application {
 		LoginWindow.INSTANCE,
 		AllMembersWindow.INSTANCE,
 		AllBooksWindow.INSTANCE,
-		AddACopy.INSTANCE
+		AddACopy.INSTANCE,
+		OperationWindow.INSTANCE
 	};
 
 	public static void hideAllWindows() {
@@ -55,7 +53,17 @@ public class Start extends Application {
 			st.hide();
 		}
 	}
-
+	public static void showOpertionWindow() {
+		hideAllWindows();
+		ControllerInterface controller = ControllerFactory.of();
+		if(!OperationWindow.INSTANCE.isInitialized()) {
+			OperationWindow.INSTANCE.setData(controller.getCurrentUser(),
+					controller.getBooksMap());
+			OperationWindow.INSTANCE.init();
+		}
+		OperationWindow.INSTANCE.refreshBookList();;
+		OperationWindow.INSTANCE.show();
+	}
 
 	@Override
 	public void start(Stage primaryStage) {
@@ -106,8 +114,7 @@ public class Start extends Application {
 				if(!AllBooksWindow.INSTANCE.isInitialized()) {
 					AllBooksWindow.INSTANCE.init();
 				}
-				ControllerInterface ci = new SystemController();
-				List<String> ids = ci.allBookIds();
+				List<String> ids = ControllerFactory.of().allBookIds();
 				Collections.sort(ids);
 				StringBuilder sb = new StringBuilder();
 				for(String s: ids) {
@@ -126,8 +133,7 @@ public class Start extends Application {
 				if(!AllMembersWindow.INSTANCE.isInitialized()) {
 					AllMembersWindow.INSTANCE.init();
 				}
-				ControllerInterface ci = new SystemController();
-				List<String> ids = ci.allBookIds();
+				List<String> ids = ControllerFactory.of().allMemberIds();
 				Collections.sort(ids);
 				System.out.println(ids);
 				StringBuilder sb = new StringBuilder();
@@ -148,7 +154,7 @@ public class Start extends Application {
 				if(!AddACopy.INSTANCE.isInitialized()) {
 					AddACopy.INSTANCE.init();
 				}
-				ControllerInterface ci = new SystemController();
+				ControllerInterface ci = ControllerFactory.of();
 //				List<String> ids = ci.allMemberIds();
 //				Collections.sort(ids);
 //				System.out.println(ids);

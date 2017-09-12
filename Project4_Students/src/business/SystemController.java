@@ -48,6 +48,16 @@ public class SystemController implements ControllerInterface {
 		HashMap<String, Book> retval = da.readBooksMap();
 		return retval;
 	}
+	@Override
+	public User getCurrentUser() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public HashMap<String, Book> getBooksMap() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 
 }
