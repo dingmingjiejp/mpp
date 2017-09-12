@@ -12,7 +12,7 @@ import dataaccess.User;
 
 public class SystemController implements ControllerInterface {
 	public static Auth currentAuth = null;
-	
+
 	public void login(String id, String password) throws LoginException {
 		DataAccess da = new DataAccessFacade();
 		HashMap<String, User> map = da.readUserMap();
@@ -24,7 +24,7 @@ public class SystemController implements ControllerInterface {
 			throw new LoginException("Password incorrect");
 		}
 		currentAuth = map.get(id).getAuthorization();
-		
+
 	}
 	@Override
 	public List<String> allMemberIds() {
@@ -33,7 +33,7 @@ public class SystemController implements ControllerInterface {
 		retval.addAll(da.readMemberMap().keySet());
 		return retval;
 	}
-	
+
 	@Override
 	public List<String> allBookIds() {
 		DataAccess da = new DataAccessFacade();
@@ -41,6 +41,13 @@ public class SystemController implements ControllerInterface {
 		retval.addAll(da.readBooksMap().keySet());
 		return retval;
 	}
-	
-	
+
+	@Override
+	public HashMap<String, Book> allBookList() {
+		DataAccess da = new DataAccessFacade();
+		HashMap<String, Book> retval = da.readBooksMap();
+		return retval;
+	}
+
+
 }

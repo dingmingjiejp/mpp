@@ -1,11 +1,15 @@
 package ui;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
+import business.Book;
 import business.ControllerInterface;
 import business.SystemController;
 import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -22,7 +26,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
-
+import business.Book;
 
 public class Start extends Application {
 	public static void main(String[] args) {
@@ -32,31 +36,32 @@ public class Start extends Application {
 	public static Stage primStage() {
 		return primStage;
 	}
-	
+
 	public static class Colors {
 		static Color green = Color.web("#034220");
 		static Color red = Color.FIREBRICK;
 	}
-	
-	private static Stage[] allWindows = { 
+
+	private static Stage[] allWindows = {
 		LoginWindow.INSTANCE,
-		AllMembersWindow.INSTANCE,	
-		AllBooksWindow.INSTANCE
+		AllMembersWindow.INSTANCE,
+		AllBooksWindow.INSTANCE,
+		AddACopy.INSTANCE
 	};
-	
+
 	public static void hideAllWindows() {
 		primStage.hide();
 		for(Stage st: allWindows) {
 			st.hide();
 		}
 	}
-	
+
 
 	@Override
 	public void start(Stage primaryStage) {
 		primStage = primaryStage;
 		primaryStage.setTitle("Main Page");
-				
+
 		VBox topContainer = new VBox();
 		topContainer.setId("top-container");
 		MenuBar mainMenu = new MenuBar();
@@ -73,14 +78,14 @@ public class Start extends Application {
         splashLabel.setFont(Font.font("Trajan Pro", FontWeight.BOLD, 30));
         splashBox.getChildren().add(splashLabel);
         splashBox.setAlignment(Pos.CENTER);
-		
+
 		topContainer.getChildren().add(mainMenu);
 		topContainer.getChildren().add(splashBox);
 		topContainer.getChildren().add(imageHolder);
-		
+
 		Menu optionsMenu = new Menu("Options");
 		MenuItem login = new MenuItem("Login");
-		
+
 		login.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
@@ -91,8 +96,8 @@ public class Start extends Application {
     			LoginWindow.INSTANCE.clear();
     			LoginWindow.INSTANCE.show();
             }
-        });			
-							
+        });
+
 		MenuItem bookIds = new MenuItem("All Book Ids");
 		bookIds.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -112,7 +117,7 @@ public class Start extends Application {
 				AllBooksWindow.INSTANCE.show();
             }
 		});
-		
+
 		MenuItem memberIds = new MenuItem("All Member Ids");
 		memberIds.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -122,7 +127,7 @@ public class Start extends Application {
 					AllMembersWindow.INSTANCE.init();
 				}
 				ControllerInterface ci = new SystemController();
-				List<String> ids = ci.allMemberIds();
+				List<String> ids = ci.allBookIds();
 				Collections.sort(ids);
 				System.out.println(ids);
 				StringBuilder sb = new StringBuilder();
@@ -133,8 +138,32 @@ public class Start extends Application {
 				AllMembersWindow.INSTANCE.setData(sb.toString());
 				AllMembersWindow.INSTANCE.show();
             }
-		});	
-		optionsMenu.getItems().addAll(login, bookIds, memberIds);
+		});
+
+		MenuItem addACopy = new MenuItem("Add a copy");
+		addACopy.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+				hideAllWindows();
+				if(!AddACopy.INSTANCE.isInitialized()) {
+					AddACopy.INSTANCE.init();
+				}
+				ControllerInterface ci = new SystemController();
+//				List<String> ids = ci.allMemberIds();
+//				Collections.sort(ids);
+//				System.out.println(ids);
+//				StringBuilder sb = new StringBuilder();
+//				for(String s: ids) {
+//					sb.append(s + "\n");
+//				}
+//				System.out.println(sb.toString());
+//				AddACopy.INSTANCE.setData(sb.toString());
+				HashMap<String, Book> books = ci.allBookList();
+				AddACopy.INSTANCE.setBookData(books);
+				AddACopy.INSTANCE.show();
+            }
+		});
+		optionsMenu.getItems().addAll(login, bookIds, memberIds, addACopy);
 
 		mainMenu.getMenus().addAll(optionsMenu);
 		Scene scene = new Scene(topContainer, 420, 375);
@@ -142,5 +171,5 @@ public class Start extends Application {
 		scene.getStylesheets().add(getClass().getResource("library.css").toExternalForm());
 		primaryStage.show();
 	}
-	
+
 }
