@@ -65,6 +65,16 @@ public class Start extends Application {
 		OperationWindow.INSTANCE.show();
 	}
 
+	public static void showAddACopyWindow() {
+		hideAllWindows();
+		if(!AddACopy.INSTANCE.isInitialized()) {
+//			AddACopy.INSTANCE.setData(controller.getCurrentUser(),
+//					controller.getBooksMap());
+			AddACopy.INSTANCE.init();
+		}
+		AddACopy.INSTANCE.show();
+	}
+
 	@Override
 	public void start(Stage primaryStage) {
 		primStage = primaryStage;
