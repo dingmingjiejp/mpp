@@ -43,7 +43,7 @@ public class Start extends Application {
 		LoginWindow.INSTANCE,
 		AllMembersWindow.INSTANCE,
 		AllBooksWindow.INSTANCE,
-		AddACopy.INSTANCE,
+		AddACopyWindow.INSTANCE,
 		OperationWindow.INSTANCE,
 		CheckOutWindow.INSTANCE,
 		AddACopyWindow.INSTANCE
