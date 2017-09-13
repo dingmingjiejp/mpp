@@ -17,11 +17,14 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -52,7 +55,7 @@ public class AddACopyWindow extends Stage implements LibWindow{
 	public void init() {
 		try {
 	        GridPane grid = new GridPane();
-	        grid.setAlignment(Pos.CENTER_LEFT);
+	        grid.setAlignment(Pos.TOP_CENTER);
 	        grid.setHgap(20);
 	        grid.setVgap(20);
 	        grid.setPadding(new Insets(25, 25, 25, 25));
@@ -70,28 +73,39 @@ public class AddACopyWindow extends Stage implements LibWindow{
 	        Text scenetitle = new Text("Add a book copy");
 	        scenetitle.setFont(Font.font("Harlow Solid Italic", FontWeight.NORMAL, 20)); //Tahoma
 
+	        Text selecttitle = new Text("Select the book");
+	        selecttitle.setFont(Font.font("Harlow Solid Italic", FontWeight.BOLD, 12));
+
+	        Text lefttitle = new Text("Search a book");
+	        lefttitle.setFont(Font.font("Harlow Solid Italic", FontWeight.BOLD, 12));
+
 	        grid.add(scenetitle, 0, 0, 2, 1);
-	        grid.add(hbLeft, 0, 1);
-	        grid.add(hbRight, 1, 1);
-	        grid.add(hbBottom, 0, 2, 2, 1);
+	        grid.add(lefttitle, 0, 1);
+	        grid.add(selecttitle, 1, 1);
+	        grid.add(hbLeft, 0, 2);
+	        grid.add(hbRight, 1, 2);
+	        grid.add(hbBottom, 0, 3, 2, 1);
 
 
-	        //Scene scene = new Scene(grid, 300, 200);
-	        Scene scene = new Scene(grid);
+	        Scene scene = new Scene(grid, 725, 595);
+//	        Scene scene = new Scene(grid);
 	        setScene(scene);
-
-//	        GridPane gridIsbn = new GridPane();
-	        Label lblIsbn = new Label("ISBN: ");
-	        hbLeft.getChildren().add(lblIsbn);
-//	        gridIsbn.add(lblIsbn, 0, 0);
-	        txtIsbn = new TextField();
-//	        gridIsbn.add(txtIsbn, 1, 0);
-//	        hbLeft.getChildren().add(gridIsbn);
-	        hbLeft.getChildren().add(txtIsbn);
+	        this.INSTANCE.setResizable(false);
+	        this.INSTANCE.sizeToScene();
 
 	        GridPane gridIsbn = new GridPane();
-	        gridIsbn.setHgap(20);
-	        gridIsbn.setVgap(20);
+	        gridIsbn.setHgap(10);
+	        Label lblIsbn = new Label("ISBN: ");
+	        gridIsbn.add(lblIsbn, 0, 0);
+//	        hbLeft.getChildren().add(lblIsbn);
+	        txtIsbn = new TextField();
+	        txtIsbn.setMaxWidth(100);
+	        gridIsbn.add(txtIsbn, 1, 0);
+	        hbLeft.getChildren().add(gridIsbn);
+
+	        GridPane gridSearchBtn = new GridPane();
+	        gridSearchBtn.setHgap(10);
+//	        gridSearchBtn.setVgap(20);
 	        Button searchBtn = new Button("Search");
 			searchBtn.setOnAction(new EventHandler<ActionEvent>() {
 	        	@Override
@@ -99,8 +113,7 @@ public class AddACopyWindow extends Stage implements LibWindow{
 	        		searchForBook(txtIsbn.getText());
 	        	}
 	        });
-//			hbLeft.getChildren().add(searchBtn);
-			gridIsbn.add(searchBtn, 0, 0);
+			gridSearchBtn.add(searchBtn, 0, 0);
 
 			Button clearBtn = new Button("Clear search");
 			clearBtn.setOnAction(new EventHandler<ActionEvent>() {
@@ -110,8 +123,13 @@ public class AddACopyWindow extends Stage implements LibWindow{
 	        		refreshBookList();
 	        	}
 	        });
-			gridIsbn.add(clearBtn, 1, 0);
-			hbLeft.getChildren().add(gridIsbn);
+			gridSearchBtn.add(clearBtn, 1, 0);
+			hbLeft.getChildren().add(gridSearchBtn);
+
+
+			GridPane gridBtn = new GridPane();
+			gridBtn.setHgap(20);
+			gridBtn.setVgap(20);
 
 	        Button btnBack = new Button("< Back");
 	        btnBack.setMinSize(150, 20);
@@ -119,7 +137,36 @@ public class AddACopyWindow extends Stage implements LibWindow{
 	        btnBack.setOnAction((e) -> {
 	        	Start.showOpertionWindow();
 	        });
-	        hbBottom.getChildren().add(btnBack);
+	        gridBtn.add(btnBack, 0, 0);
+
+	        Button btnAddACopy = new Button("Add a copy of the selected book");
+	        btnAddACopy.setMinSize(150, 20);
+	        btnAddACopy.setAlignment(Pos.BOTTOM_RIGHT);
+	        btnAddACopy.setOnAction((e) -> {
+	        	Book book = tbv.getSelectionModel().getSelectedItem();
+        		if(book == null) {
+        			Alert alert = new Alert(AlertType.WARNING, "To add a new copy, select the book first!",
+        					ButtonType.OK);
+        			alert.setTitle("Add a copy");
+        			alert.setHeaderText("Select the book");
+        			alert.show();
+        		} else {
+        			ControllerInterface ci = ControllerFactory.of();
+        			ci.addACopy(book);
+        			ci.updateBooksMap();
+        			updateBooksMap(ci.getBooksMap());
+        			refreshBookList();
+
+        			txtIsbn.setText("");
+        			Alert alert = new Alert(AlertType.INFORMATION, "The copy of the book '" +
+        					book.getIsbn() + "' was added successfully.", ButtonType.OK);
+        			alert.setTitle("Add a copy");
+        			alert.setHeaderText("The copy was added");
+        			alert.show();
+        		}
+	        });
+	        gridBtn.add(btnAddACopy, 1, 0);
+	        hbBottom.getChildren().add(gridBtn);
 
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -186,6 +233,7 @@ public class AddACopyWindow extends Stage implements LibWindow{
         });
         table.getColumns().add(colCopies);
         table.setPrefSize(500, 500);
+        table.setMaxHeight(400);
         table.setColumnResizePolicy((param) -> true );
 	}
 
@@ -203,6 +251,10 @@ public class AddACopyWindow extends Stage implements LibWindow{
 	@Override
 	public void isInitialized(boolean val) {
 		isInitialized = val;
+	}
+
+	public void updateBooksMap(HashMap<String,Book> booksMap) {
+		this.booksMap = booksMap;
 	}
 
     public void refreshBookList() {

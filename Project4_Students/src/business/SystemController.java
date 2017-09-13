@@ -60,9 +60,21 @@ public class SystemController implements ControllerInterface {
 	}
 
 	@Override
+	public void updateBooksMap() {
+		booksMap = da.readBooksMap();
+	};
+
+	@Override
 	public HashMap<String, Book> searchBooks(String isbn) {
-		DataAccess da = new DataAccessFacade();
+		da = new DataAccessFacade();
 		HashMap<String, Book> retval = da.findBooksMap(isbn);
 		return retval;
+	}
+
+	@Override
+	public void addACopy(Book book) {
+		book.addCopy();
+		da = new DataAccessFacade();
+		da.saveNewCopy(book);
 	}
 }

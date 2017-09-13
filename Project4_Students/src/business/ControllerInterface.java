@@ -13,4 +13,6 @@ public interface ControllerInterface {
 	public User getCurrentUser();
 	public HashMap<String, Book> getBooksMap();
 	public HashMap<String, Book> searchBooks(String isbn);
+	public void addACopy(Book book);
+	public void updateBooksMap();
 }
