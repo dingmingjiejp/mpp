@@ -68,7 +68,7 @@ public class AddAMemberWindow extends Stage implements LibWindow{
 	        hbBottom.setAlignment(Pos.BOTTOM_CENTER);
 
 	        tbv = new TableView<>();
-//	        initMemberListView(tbv);
+	        initMemberListView(tbv);
 
 	        Text scenetitle = new Text("Add a New Library Member");
 	        scenetitle.setFont(Font.font("Harlow Solid Italic", FontWeight.NORMAL, 20)); //Tahoma
