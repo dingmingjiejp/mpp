@@ -7,10 +7,11 @@ import business.LibraryMember;
 import dataaccess.DataAccessFacade.StorageType;
 
 public interface DataAccess {
-	public HashMap<String,Book> readBooksMap();
-	public HashMap<String,User> readUserMap();
-	public HashMap<String, LibraryMember> readMemberMap();
-	public void saveNewMember(LibraryMember member);
-	public HashMap<String,Book> findBooksMap(String isbn);
-	public void saveNewCopy(Book book);
+    HashMap<String,Book> readBooksMap();
+    HashMap<String,User> readUserMap();
+    HashMap<String, LibraryMember> readMemberMap();
+    void saveNewMember(LibraryMember member);
+    HashMap<String,Book> findBooksMap(String isbn);
+    void saveBook(Book book);
+    void saveNewCopy(Book book);
 }

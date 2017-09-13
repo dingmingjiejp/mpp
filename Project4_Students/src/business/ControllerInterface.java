@@ -7,12 +7,15 @@ import business.Book;
 import dataaccess.User;
 
 public interface ControllerInterface {
-	public void login(String id, String password) throws LoginException;
-	public List<String> allMemberIds();
-	public List<String> allBookIds();
-	public User getCurrentUser();
-	public HashMap<String, Book> getBooksMap();
-	public HashMap<String, Book> searchBooks(String isbn);
-	public void addACopy(Book book);
-	public void updateBooksMap();
+    void login(String id, String password) throws LoginException;
+    List<String> allMemberIds();
+    List<String> allBookIds();
+    User getCurrentUser();
+    HashMap<String, Book> getBooksMap();
+    HashMap<String, Book> searchBooks(String isbn);
+    void validateCheckOutForm(String memberId, String isbn) throws ValidationException;
+    LibraryMember getLibraryMember(String memberId);
+    void checkOut(String memberId, String isbn) throws ValidationException;
+    void addACopy(Book book);
+    void updateBooksMap();
 }

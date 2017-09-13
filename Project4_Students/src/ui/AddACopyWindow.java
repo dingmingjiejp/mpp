@@ -131,7 +131,7 @@ public class AddACopyWindow extends Stage implements LibWindow{
 	        btnBack.setMinSize(150, 20);
 	        btnBack.setAlignment(Pos.BOTTOM_LEFT);
 	        btnBack.setOnAction((e) -> {
-	        	Start.showOpertionWindow();
+	        	Start.showOperationWindow();
 	        });
 	        gridBtn.add(btnBack, 0, 0);
 	        gridBtn.add(initBtnAdd(), 1, 0);

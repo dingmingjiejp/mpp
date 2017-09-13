@@ -80,7 +80,7 @@ public class LoginWindow extends Stage implements LibWindow {
         			ControllerFactory.of().login(userTextField.getText().trim(), pwBox.getText().trim());
         			messageBar.setFill(Start.Colors.green);
              	    messageBar.setText("Login successful");
-             	    Start.showOpertionWindow();
+             	    Start.showOperationWindow();
 
         		} catch(LoginException ex) {
         			messageBar.setFill(Start.Colors.red);
