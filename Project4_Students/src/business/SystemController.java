@@ -120,6 +120,7 @@ public class SystemController implements ControllerInterface {
     public void addACopy(Book book) {
         book.addCopy();
         da.saveNewCopy(book);
+        updateBooksMap();
     }
 
 }

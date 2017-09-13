@@ -173,7 +173,7 @@ public class AddACopyWindow extends Stage implements LibWindow{
     		} else {
     			ControllerInterface ci = ControllerFactory.of();
     			ci.addACopy(book);
-    			ci.updateBooksMap();
+
     			updateBooksMap(ci.getBooksMap());
     			refreshBookList();
 
