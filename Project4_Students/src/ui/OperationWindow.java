@@ -67,7 +67,7 @@ public class OperationWindow extends  Stage implements LibWindow{
 
 	        if (Auth.BOTH.equals(this.user.getAuthorization()) ||
 	        		Auth.LIBRARIAN.equals(this.user.getAuthorization()) ){
-		        Button checkOutIn = new Button("Check out");
+		        Button checkOutIn = new Button("Checkout a Book");
 		        checkOutIn.setMinSize(150, 20);
 		        checkOutIn.setAlignment(Pos.CENTER_LEFT);
 		        checkOutIn.setOnAction((e) -> {
@@ -79,20 +79,21 @@ public class OperationWindow extends  Stage implements LibWindow{
 
 	        if (Auth.BOTH.equals(this.user.getAuthorization()) ||
 	        		Auth.ADMIN.equals(this.user.getAuthorization()) ){
-		        Button addBookCopy = new Button("Add book copy");
+		        Button addBookCopy = new Button("Add a Book Copy");
 		        addBookCopy.setMinSize(150, 20);
 		        addBookCopy.setAlignment(Pos.CENTER_LEFT);
 		        addBookCopy.setOnAction((e) -> {
 		        	Start.showAddACopyWindow();
 		        });
 
-		        Button addMemeber = new Button("Add member");
+		        Button addMemeber = new Button("Add a Member");
 		        addMemeber.setMinSize(150, 20);
 		        addMemeber.setAlignment(Pos.CENTER_LEFT);
 		        addMemeber.setOnAction((e) -> {
+		        	Start.showAddAMemberWindow();
 		        });
 
-		        Button addBook = new Button("Add book");
+		        Button addBook = new Button("Add a Book");
 		        addBook.setMinSize(150, 20);
 		        addBook.setAlignment(Pos.CENTER_LEFT);
 		        addBook.setOnAction((e) -> {
@@ -104,7 +105,7 @@ public class OperationWindow extends  Stage implements LibWindow{
 		        print.setOnAction((e) -> {
 		        });
 
-		        Button overDueList = new Button("Search overdue book copy");
+		        Button overDueList = new Button("Overdue Book Copies");
 		        overDueList.setMinSize(150, 20);
 		        overDueList.setAlignment(Pos.CENTER_LEFT);
 		        overDueList.setOnAction((e) -> {
@@ -121,7 +122,7 @@ public class OperationWindow extends  Stage implements LibWindow{
 	        Scene scene = new Scene(grid);
 	        setScene(scene);
 
-	        Button logout = new Button("logout");
+	        Button logout = new Button("Logout");
 	        logout.setMinSize(150, 20);
 	        logout.setAlignment(Pos.CENTER_LEFT);
 	        logout.setOnAction((e) -> {
@@ -145,7 +146,7 @@ public class OperationWindow extends  Stage implements LibWindow{
 
 
 	@Override
-	public void isInitialized(boolean val) {
+	public void setInitialized(boolean val) {
 		isInitialized = val;
 	}
 

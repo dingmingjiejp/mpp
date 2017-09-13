@@ -68,7 +68,7 @@ public class AddAMemberWindow extends Stage implements LibWindow{
 	        hbBottom.setAlignment(Pos.BOTTOM_CENTER);
 
 	        tbv = new TableView<>();
-//	        initMemberListView(tbv);
+	        initMemberListView(tbv);
 
 	        Text scenetitle = new Text("Add a New Library Member");
 	        scenetitle.setFont(Font.font("Harlow Solid Italic", FontWeight.NORMAL, 20)); //Tahoma
@@ -107,16 +107,17 @@ public class AddAMemberWindow extends Stage implements LibWindow{
 	        btnBack.setMinSize(150, 20);
 	        btnBack.setAlignment(Pos.BOTTOM_LEFT);
 	        btnBack.setOnAction((e) -> {
-	        	Start.showOpertionWindow();
+	        	Start.showOperationWindow();
 	        });
 	        gridBtn.add(btnBack, 0, 0);
 
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
+		setInitialized(true);
 	}
 
-	private void initBookListView(TableView<LibraryMember> table) {
+	private void initMemberListView(TableView<LibraryMember> table) {
         // Add extra columns if necessary:
         TableColumn<LibraryMember, String> colmemberId = new TableColumn<>("MemberID");
         colmemberId.setMinWidth(30);
@@ -157,7 +158,7 @@ public class AddAMemberWindow extends Stage implements LibWindow{
 
 
 	@Override
-	public void isInitialized(boolean val) {
+	public void setInitialized(boolean val) {
 		isInitialized = val;
 	}
 
@@ -165,7 +166,7 @@ public class AddAMemberWindow extends Stage implements LibWindow{
 		this.membersMap = membersMap;
 	}
 
-    public void refreshBookList() {
+    public void refreshMemberList() {
     	if (tbv != null) {
     		tbv.getItems().clear();
             this.membersMap.forEach((r,v) -> {

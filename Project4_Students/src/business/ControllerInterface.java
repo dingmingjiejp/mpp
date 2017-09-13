@@ -12,6 +12,7 @@ public interface ControllerInterface {
     List<String> allBookIds();
     User getCurrentUser();
     HashMap<String, Book> getBooksMap();
+    HashMap<String, LibraryMember> getMembersMap();
     HashMap<String, Book> searchBooks(String isbn);
     void validateCheckOutForm(String memberId, String isbn) throws ValidationException;
     LibraryMember getLibraryMember(String memberId);

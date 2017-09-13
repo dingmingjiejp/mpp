@@ -22,12 +22,12 @@ import javafx.stage.Stage;
 
 public class AllMembersWindow extends Stage implements LibWindow {
 	public static final AllMembersWindow INSTANCE = new AllMembersWindow();
-	
+
 	private boolean isInitialized = false;
 	public boolean isInitialized() {
 		return isInitialized;
 	}
-	public void isInitialized(boolean val) {
+	public void setInitialized(boolean val) {
 		isInitialized = val;
 	}
 	private TextArea ta;
@@ -35,7 +35,7 @@ public class AllMembersWindow extends Stage implements LibWindow {
 		ta.setText(data);
 	}
 	private AllMembersWindow() {}
-	
+
 	public void init() {
 		GridPane grid = new GridPane();
 		grid.setId("top-container");
@@ -49,8 +49,8 @@ public class AllMembersWindow extends Stage implements LibWindow {
         grid.add(scenetitle, 0, 0, 2, 1);
 
 		ta = new TextArea();
-		grid.add(ta, 0,1);	
-		
+		grid.add(ta, 0,1);
+
 		Button backBtn = new Button("<= Back to Main");
         backBtn.setOnAction(new EventHandler<ActionEvent>() {
         	@Override
