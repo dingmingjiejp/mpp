@@ -49,6 +49,7 @@ public class Start extends Application {
 		AddBookWindow.INSTANCE,
 		AddAuthorsWindow.INSTANCE,
 		PrintWindow.INSTANCE,
+		AddAMemberWindow.INSTANCE,
 	};
 
 	public static void hideAllWindows() {
@@ -133,6 +134,17 @@ public class Start extends Application {
 		AddAuthorsWindow.INSTANCE.reset();
 		AddAuthorsWindow.INSTANCE.setData(list);
 		AddAuthorsWindow.INSTANCE.show();
+	}
+	public static void showAddAMemberWindow() {
+		hideAllWindows();
+		ControllerInterface controller = ControllerFactory.of();
+		if(!AddAMemberWindow.INSTANCE.isInitialized()) {
+			AddAMemberWindow.INSTANCE.setData(controller.getCurrentUser(),
+					controller.getMembersMap());
+			AddAMemberWindow.INSTANCE.init();
+		}
+		AddAMemberWindow.INSTANCE.refreshMemberList();;
+		AddAMemberWindow.INSTANCE.show();
 	}
 
 	@Override

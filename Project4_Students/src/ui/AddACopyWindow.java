@@ -17,13 +17,13 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
@@ -68,7 +68,7 @@ public class AddACopyWindow extends Stage implements LibWindow{
 	        hbRight.getChildren().add(tbv);
 	        initBookListView(tbv);
 
-	        Text scenetitle = new Text("Add a book copy");
+	        Text scenetitle = new Text("Add a Book Copy");
 	        scenetitle.setFont(Font.font("Harlow Solid Italic", FontWeight.NORMAL, 20)); //Tahoma
 
 	        Text selecttitle = new Text("Select the book");
@@ -95,7 +95,6 @@ public class AddACopyWindow extends Stage implements LibWindow{
 	        gridIsbn.setHgap(10);
 	        Label lblIsbn = new Label("ISBN: ");
 	        gridIsbn.add(lblIsbn, 0, 0);
-//	        hbLeft.getChildren().add(lblIsbn);
 	        txtIsbn = new TextField();
 	        txtIsbn.setMaxWidth(100);
 	        gridIsbn.add(txtIsbn, 1, 0);
@@ -103,7 +102,6 @@ public class AddACopyWindow extends Stage implements LibWindow{
 
 	        GridPane gridSearchBtn = new GridPane();
 	        gridSearchBtn.setHgap(10);
-//	        gridSearchBtn.setVgap(20);
 	        Button searchBtn = new Button("Search");
 			searchBtn.setOnAction(new EventHandler<ActionEvent>() {
 	        	@Override
@@ -136,34 +134,8 @@ public class AddACopyWindow extends Stage implements LibWindow{
 	        	Start.showOperationWindow();
 	        });
 	        gridBtn.add(btnBack, 0, 0);
+	        gridBtn.add(initBtnAdd(), 1, 0);
 
-	        Button btnAddACopy = new Button("Add a copy of the selected book");
-	        btnAddACopy.setMinSize(150, 20);
-	        btnAddACopy.setAlignment(Pos.BOTTOM_RIGHT);
-	        btnAddACopy.setOnAction((e) -> {
-	        	Book book = tbv.getSelectionModel().getSelectedItem();
-        		if(book == null) {
-        			Alert alert = new Alert(AlertType.WARNING, "To add a new copy, select the book first!",
-        					ButtonType.OK);
-        			alert.setTitle("Add a copy");
-        			alert.setHeaderText("Select the book");
-        			alert.show();
-        		} else {
-        			ControllerInterface ci = ControllerFactory.of();
-        			ci.addACopy(book);
-        			ci.updateBooksMap();
-        			updateBooksMap(ci.getBooksMap());
-        			refreshBookList();
-
-        			txtIsbn.setText("");
-        			Alert alert = new Alert(AlertType.INFORMATION, "The copy of the book '" +
-        					book.getIsbn() + "' was added successfully.", ButtonType.OK);
-        			alert.setTitle("Add a copy");
-        			alert.setHeaderText("The copy was added");
-        			alert.show();
-        		}
-	        });
-	        gridBtn.add(btnAddACopy, 1, 0);
 	        hbBottom.getChildren().add(gridBtn);
 
 		} catch(Exception e) {
@@ -186,9 +158,39 @@ public class AddACopyWindow extends Stage implements LibWindow{
     	}
 	}
 
+	private Button initBtnAdd() {
+		Button btnAddACopy = new Button("Add a copy of the selected book");
+        btnAddACopy.setMinSize(150, 20);
+        btnAddACopy.setAlignment(Pos.BOTTOM_RIGHT);
+        btnAddACopy.setOnAction((e) -> {
+        	Book book = tbv.getSelectionModel().getSelectedItem();
+    		if(book == null) {
+    			Alert alert = new Alert(AlertType.WARNING, "To add a new copy, select the book first!",
+    					ButtonType.OK);
+    			alert.setTitle("Add a Book Copy");
+    			alert.setHeaderText("Select the book");
+    			alert.show();
+    		} else {
+    			ControllerInterface ci = ControllerFactory.of();
+    			ci.addACopy(book);
+
+    			updateBooksMap(ci.getBooksMap());
+    			refreshBookList();
+
+    			txtIsbn.setText("");
+    			Alert alert = new Alert(AlertType.INFORMATION, "The copy of the book '" +
+    					book.getIsbn() + "' was added successfully.", ButtonType.OK);
+    			alert.setTitle("Add a Book Copy");
+    			alert.setHeaderText("The copy was added");
+    			alert.show();
+    		}
+        });
+        return btnAddACopy;
+	}
+
 	private void initBookListView(TableView<Book> table) {
         // Add extra columns if necessary:
-        TableColumn<Book, String> colIsbn = new TableColumn<>("isbn");
+        TableColumn<Book, String> colIsbn = new TableColumn<>("ISBN");
         colIsbn.setMinWidth(80);
         colIsbn.setCellValueFactory(data -> {
             Book rowValue = data.getValue();
@@ -197,7 +199,7 @@ public class AddACopyWindow extends Stage implements LibWindow{
         });
         table.getColumns().add(colIsbn);
 
-        TableColumn<Book, String> colTitle = new TableColumn<>("title");
+        TableColumn<Book, String> colTitle = new TableColumn<>("Title");
         colTitle.setMinWidth(80);
         colTitle.setCellValueFactory(data -> {
             Book rowValue = data.getValue();
@@ -206,17 +208,17 @@ public class AddACopyWindow extends Stage implements LibWindow{
         });
         table.getColumns().add(colTitle);
 
-        TableColumn<Book, String> colAuthors = new TableColumn<>("authors");
+        TableColumn<Book, String> colAuthors = new TableColumn<>("Authors");
         colAuthors.setMinWidth(80);
         colAuthors.setCellValueFactory(data -> {
             Book rowValue = data.getValue();
             List<Author> authors = rowValue.getAuthors();
-            String authorsName = authors.stream().map(AddACopyWindow::getAuthorName ).collect(Collectors.joining(","));
+            String authorsName = authors.stream().map(AddACopyWindow::getAuthorName ).collect(Collectors.joining(", "));
             return new ReadOnlyStringWrapper(authorsName);
         });
         table.getColumns().add(colAuthors);
 
-        TableColumn<Book, String> colCopies = new TableColumn<>("copies");
+        TableColumn<Book, String> colCopies = new TableColumn<>("Copies");
         colCopies.setMinWidth(80);
         colCopies.setCellValueFactory(data -> {
             Book rowValue = data.getValue();
@@ -247,7 +249,7 @@ public class AddACopyWindow extends Stage implements LibWindow{
 
 
 	@Override
-	public void isInitialized(boolean val) {
+	public void setInitialized(boolean val) {
 		isInitialized = val;
 	}
 

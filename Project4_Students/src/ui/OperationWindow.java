@@ -76,13 +76,14 @@ public class OperationWindow extends  Stage implements LibWindow{
 		        	Start.showAddACopyWindow();
 		        });
 
-		        Button addMemeber = new Button("Add member");
+		        Button addMemeber = new Button("Add a Member");
 		        addMemeber.setMinSize(150, 20);
 		        addMemeber.setAlignment(Pos.CENTER_LEFT);
 		        addMemeber.setOnAction((e) -> {
+		        	Start.showAddAMemberWindow();
 		        });
 
-		        Button addBook = new Button("Add book");
+		        Button addBook = new Button("Add a Book");
 		        addBook.setMinSize(150, 20);
 		        addBook.setAlignment(Pos.CENTER_LEFT);
 		        addBook.setOnAction((e) -> {
@@ -96,7 +97,7 @@ public class OperationWindow extends  Stage implements LibWindow{
 		        	Start.showPrintWindow();
 		        });
 
-		        Button overDueList = new Button("Search overdue book copy");
+		        Button overDueList = new Button("Overdue Book Copies");
 		        overDueList.setMinSize(150, 20);
 		        overDueList.setAlignment(Pos.CENTER_LEFT);
 		        overDueList.setOnAction((e) -> {
@@ -113,7 +114,7 @@ public class OperationWindow extends  Stage implements LibWindow{
 	        Scene scene = new Scene(grid);
 	        setScene(scene);
 
-	        Button logout = new Button("logout");
+	        Button logout = new Button("Logout");
 	        logout.setMinSize(150, 20);
 	        logout.setAlignment(Pos.CENTER_LEFT);
 	        logout.setOnAction((e) -> {
@@ -138,7 +139,7 @@ public class OperationWindow extends  Stage implements LibWindow{
 
 
 	@Override
-	public void isInitialized(boolean val) {
+	public void setInitialized(boolean val) {
 		isInitialized = val;
 	}
 

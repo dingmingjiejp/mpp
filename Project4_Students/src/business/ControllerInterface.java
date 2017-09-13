@@ -34,4 +34,12 @@ public interface ControllerInterface {
 	Author createAuthor(String f, String l, String t, String bio, String street, String city, String state, String zip) throws ValidationException;
 
 	void printCheckOutRecord(LibraryMember member, CheckOutRecordEntry entry);
+
+  void addMember(String memberId, String firstName, String lastName,
+    		String telephone, String street, String city, String state, String zip);  
+
+  void updateMembersMap();
+  
+  void validateAddMemberForm(String memberId, String firstName, String lastName,
+    		String telephone, String street, String city, String state, String zip) throws ValidationException;
 }

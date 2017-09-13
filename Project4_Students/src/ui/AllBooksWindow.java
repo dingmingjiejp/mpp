@@ -16,12 +16,12 @@ import javafx.stage.Stage;
 
 public class AllBooksWindow extends Stage implements LibWindow {
 	public static final AllBooksWindow INSTANCE = new AllBooksWindow();
-	
+
 	private boolean isInitialized = false;
 	public boolean isInitialized() {
 		return isInitialized;
 	}
-	public void isInitialized(boolean val) {
+	public void setInitialized(boolean val) {
 		isInitialized = val;
 	}
 	private TextArea ta;
@@ -29,7 +29,7 @@ public class AllBooksWindow extends Stage implements LibWindow {
 		ta.setText(data);
 	}
 	private AllBooksWindow() {}
-	
+
 	public void init() {
 		GridPane grid = new GridPane();
 		grid.setId("top-container");
@@ -41,7 +41,7 @@ public class AllBooksWindow extends Stage implements LibWindow {
         Text scenetitle = new Text("All Book IDs");
         scenetitle.setFont(Font.font("Harlow Solid Italic", FontWeight.NORMAL, 20)); //Tahoma
         grid.add(scenetitle, 0, 0, 2, 1);
-		
+
 		ta = new TextArea();
 		grid.add(ta, 0,1);
 		Button backBtn = new Button("<= Back to Main");
