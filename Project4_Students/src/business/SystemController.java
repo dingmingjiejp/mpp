@@ -74,7 +74,6 @@ public class SystemController implements ControllerInterface {
 	@Override
 	public void addACopy(Book book) {
 		book.addCopy();
-		da = new DataAccessFacade();
 		da.saveNewCopy(book);
 	}
 }
