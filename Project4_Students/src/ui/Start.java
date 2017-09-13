@@ -1,10 +1,9 @@
 package ui;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 
-import business.Book;
+import business.Author;
 import business.ControllerFactory;
 import business.ControllerInterface;
 import javafx.application.Application;
@@ -46,7 +45,10 @@ public class Start extends Application {
 		AddACopyWindow.INSTANCE,
 		OperationWindow.INSTANCE,
 		CheckOutWindow.INSTANCE,
-		AddACopyWindow.INSTANCE
+		AddACopyWindow.INSTANCE,
+		AddBookWindow.INSTANCE,
+		AddAuthorsWindow.INSTANCE,
+		PrintWindow.INSTANCE,
 	};
 
 	public static void hideAllWindows() {
@@ -56,15 +58,20 @@ public class Start extends Application {
 		}
 	}
 
+	public static void destroyAllWindows() {
+		for(Stage st: allWindows) {
+			((LibWindow)st).isInitialized(false);;
+		}
+	}
+
+
 	public static void showOperationWindow() {
 		hideAllWindows();
 		ControllerInterface controller = ControllerFactory.of();
 		if(!OperationWindow.INSTANCE.isInitialized()) {
-			OperationWindow.INSTANCE.setData(controller.getCurrentUser(),
-					controller.getBooksMap());
 			OperationWindow.INSTANCE.init();
 		}
-		OperationWindow.INSTANCE.refreshBookList();;
+		OperationWindow.INSTANCE.refreshBookList(controller.getBooksMap());;
 		OperationWindow.INSTANCE.show();
 	}
 
@@ -89,6 +96,44 @@ public class Start extends Application {
 		CheckOutWindow.INSTANCE.show();
 	}
 
+	public static void showPrintWindow() {
+		hideAllWindows();
+		if(!PrintWindow.INSTANCE.isInitialized()) {
+			PrintWindow.INSTANCE.init();
+		}
+		PrintWindow.INSTANCE.reset();
+		PrintWindow.INSTANCE.show();
+	}
+
+	public static void showAddBookWindow(Boolean reset) {
+		hideAllWindows();
+		if(!AddBookWindow.INSTANCE.isInitialized()) {
+			AddBookWindow.INSTANCE.init();
+		}
+		if (reset) {
+			AddBookWindow.INSTANCE.reset();
+		}
+		AddBookWindow.INSTANCE.show();
+	}
+
+	public static void showAddBookWindow(List<Author> list) {
+		hideAllWindows();
+		if(!AddBookWindow.INSTANCE.isInitialized()) {
+			AddBookWindow.INSTANCE.init();
+		}
+		AddBookWindow.INSTANCE.setAuthorList(list);;
+		AddBookWindow.INSTANCE.show();
+	}
+
+	public static void showAddAuthorWindow(List<Author> list) {
+		hideAllWindows();
+		if(!AddAuthorsWindow.INSTANCE.isInitialized()) {
+			AddAuthorsWindow.INSTANCE.init();
+		}
+		AddAuthorsWindow.INSTANCE.reset();
+		AddAuthorsWindow.INSTANCE.setData(list);
+		AddAuthorsWindow.INSTANCE.show();
+	}
 
 	@Override
 	public void start(Stage primaryStage) {

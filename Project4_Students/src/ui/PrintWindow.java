@@ -3,7 +3,6 @@ package ui;
 import business.CheckOutRecordEntry;
 import business.ControllerFactory;
 import business.LibraryMember;
-import business.ValidationException;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -18,18 +17,17 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import ui.utils.WindowUtils;
 
-public class CheckOutWindow extends Stage implements LibWindow{
+public class PrintWindow extends Stage implements LibWindow{
 
-	public static final CheckOutWindow INSTANCE = new CheckOutWindow();
+	public static final PrintWindow INSTANCE = new PrintWindow();
 
 	private boolean isInitialized = false;
 	private TableView<CheckOutRecordEntry> tbv;
-	private TextField txtIsbn;
 	private TextField txtMemberId;
 	private Label errorMessage;
+	private LibraryMember member;
 
-
-	private CheckOutWindow() {
+	private PrintWindow() {
 	}
 
 	@Override
@@ -54,15 +52,11 @@ public class CheckOutWindow extends Stage implements LibWindow{
 
 	        this.tbv = WindowUtils.createCheckOutRecordEntryListTableView();
 			Label lbMemberId = new Label("Member ID:");
-			Label lblIsbn = new Label("ISBN: ");
-			txtIsbn = new TextField();
 			txtMemberId = new TextField();
 
-			grid.add(WindowUtils.createSceneText("Check out"), 0, 0, 4, 1);
+			grid.add(WindowUtils.createSceneText("Print check out record"), 0, 0, 4, 1);
 			grid.add(lbMemberId, 0, 1);
 			grid.add(txtMemberId, 1, 1);
-			grid.add(lblIsbn, 2, 1);
-			grid.add(txtIsbn, 3, 1);
 			grid.add(this.tbv, 0, 3, 4, 4);
 
 			HBox bBox = new HBox();
@@ -75,35 +69,26 @@ public class CheckOutWindow extends Stage implements LibWindow{
 				LibraryMember member = ControllerFactory.of().getLibraryMember(this.txtMemberId.getText());
 				if (member != null) {
 					loadCheckOutRecordTableView(member);
-					outputSuccessMessage("Successed");
+					this.member = member;
 				} else {
 					reset();
 					outputErrorMessage("Member id is not exist.");
 				}
 			});
 
-			Button checkOutBtn = new Button("Check Out");
-			checkOutBtn.setOnAction(e -> {
-				try {
-					this.errorMessage.setText("");
-					LibraryMember member = ControllerFactory.of().getLibraryMember(this.txtMemberId.getText());
-					if (member != null) {
-						loadCheckOutRecordTableView(member);
-					} else {
-						reset();
-					}
-					ControllerFactory.of().checkOut(this.txtMemberId.getText(), this.txtIsbn.getText());
-					loadCheckOutRecordTableView(member);
-					outputSuccessMessage("Check out success!");
-				} catch (ValidationException e1) {
-					outputErrorMessage(e1.getMessage());
+			Button printBtn = new Button("Print checkout record");
+			printBtn.setOnAction(e -> {
+				CheckOutRecordEntry entry = this.tbv.getSelectionModel().getSelectedItem();
+				if (entry == null) {
+					outputErrorMessage("please select a check out record.");
+				} else {
+					ControllerFactory.of().printCheckOutRecord(member, entry);
 				}
 			});
 
-
 			bBox.setAlignment(Pos.CENTER_RIGHT);
 			bBox.getChildren().add(checkBtn);
-			bBox.getChildren().add(checkOutBtn);
+			bBox.getChildren().add(printBtn);
 			bBox.setSpacing(20);
 
 			Button backBtn = new Button("< Back");
@@ -153,8 +138,4 @@ public class CheckOutWindow extends Stage implements LibWindow{
 		errorMessage.setText(text);
 	}
 
-	private void outputSuccessMessage(String text) {
-		errorMessage.setTextFill(Color.web("#18A851"));
-		errorMessage.setText(text);
-	}
 }

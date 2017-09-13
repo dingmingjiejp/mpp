@@ -54,7 +54,6 @@ final public class Book implements Serializable {
 		copies = newArr;
 	}
 
-
 	@Override
 	public boolean equals(Object ob) {
 		if(ob == null) return false;
@@ -122,9 +121,4 @@ final public class Book implements Serializable {
 	public int getMaxCheckoutLength() {
 		return maxCheckoutLength;
 	}
-
-
-
-
-
 }
