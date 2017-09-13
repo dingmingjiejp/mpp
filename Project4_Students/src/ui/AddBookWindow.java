@@ -35,7 +35,7 @@ public class AddBookWindow extends Stage implements LibWindow {
 	public boolean isInitialized() {
 		return isInitialized;
 	}
-	public void isInitialized(boolean val) {
+	public void setInitialized(boolean val) {
 		isInitialized = val;
 	}
 	private Text messageBar = new Text();

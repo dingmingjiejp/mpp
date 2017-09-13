@@ -267,4 +267,9 @@ public class SystemController implements ControllerInterface {
         membersMap = da.readMemberMap();
     };
 
+    @Override
+    public HashMap<String, LibraryMember> getMembersMap() {
+        return membersMap;
+    }
+
 }

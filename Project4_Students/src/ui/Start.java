@@ -61,7 +61,7 @@ public class Start extends Application {
 
 	public static void destroyAllWindows() {
 		for(Stage st: allWindows) {
-			((LibWindow)st).isInitialized(false);;
+			((LibWindow)st).setInitialized(false);;
 		}
 	}
 

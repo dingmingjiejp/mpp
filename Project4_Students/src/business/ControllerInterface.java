@@ -29,17 +29,21 @@ public interface ControllerInterface {
 
 	void updateBooksMap();
 
-	void addBook(String isbn, String title, String maxCheckoutLength, List<Author> authors, String copyNum) throws ValidationException;
+	HashMap<String, LibraryMember> getMembersMap();
 
-	Author createAuthor(String f, String l, String t, String bio, String street, String city, String state, String zip) throws ValidationException;
+	void addBook(String isbn, String title, String maxCheckoutLength, List<Author> authors, String copyNum)
+			throws ValidationException;
+
+	Author createAuthor(String f, String l, String t, String bio, String street, String city, String state, String zip)
+			throws ValidationException;
 
 	void printCheckOutRecord(LibraryMember member, CheckOutRecordEntry entry);
 
-  void addMember(String memberId, String firstName, String lastName,
-    		String telephone, String street, String city, String state, String zip);  
+	void addMember(String memberId, String firstName, String lastName, String telephone, String street, String city,
+			String state, String zip);
 
-  void updateMembersMap();
-  
-  void validateAddMemberForm(String memberId, String firstName, String lastName,
-    		String telephone, String street, String city, String state, String zip) throws ValidationException;
+	void updateMembersMap();
+
+	void validateAddMemberForm(String memberId, String firstName, String lastName, String telephone, String street,
+			String city, String state, String zip) throws ValidationException;
 }
