@@ -170,22 +170,7 @@ public class Start extends Application {
 				AllMembersWindow.INSTANCE.show();
             }
 		});
-
-		MenuItem addACopy = new MenuItem("Add a copy");
-		addACopy.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent e) {
-				hideAllWindows();
-				if(!AddACopy.INSTANCE.isInitialized()) {
-					AddACopy.INSTANCE.init();
-				}
-				ControllerInterface ci = ControllerFactory.of();
-				HashMap<String, Book> books = ci.getBooksMap();
-				AddACopy.INSTANCE.setBookData(books);
-				AddACopy.INSTANCE.show();
-            }
-		});
-		optionsMenu.getItems().addAll(login, bookIds, memberIds, addACopy);
+		optionsMenu.getItems().addAll(login, bookIds, memberIds);
 
 		mainMenu.getMenus().addAll(optionsMenu);
 		Scene scene = new Scene(topContainer, 420, 375);
