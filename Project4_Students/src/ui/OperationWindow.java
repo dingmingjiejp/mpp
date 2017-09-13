@@ -1,20 +1,15 @@
 package ui;
 
 import java.util.HashMap;
-import java.util.List;
-import java.util.stream.Collectors;
 
-import business.Author;
 import business.Book;
-import business.BookCopy;
+import business.ControllerFactory;
 import dataaccess.Auth;
 import dataaccess.User;
-import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
@@ -29,21 +24,16 @@ public class OperationWindow extends  Stage implements LibWindow{
 	public static final OperationWindow INSTANCE = new OperationWindow();
 
 	private boolean isInitialized = false;
-	private User user;
-	private HashMap<String,Book> booksMap;
+	private HashMap<String,Book> booksMap = new HashMap<>();
 	private TableView<Book> tbv;
 
 	private OperationWindow() {
 	}
 
-	public void setData(User user, HashMap<String,Book> booksMap) {
-		this.user = user;
-		this.booksMap = booksMap;
-	}
-
 	@Override
 	public void init() {
 		try {
+			User user = ControllerFactory.of().getCurrentUser();
 	        GridPane grid = new GridPane();
 	        grid.setAlignment(Pos.CENTER_LEFT);
 	        grid.setHgap(20);
@@ -58,16 +48,16 @@ public class OperationWindow extends  Stage implements LibWindow{
 	        hbRight.getChildren().add(this.tbv);
 
 
-	        Text sceneTitle = new Text("Dear " + this.user.getId() +  ", Welcome to library system.");
-			sceneTitle.setFont(Font.font("Harlow Solid Italic", FontWeight.NORMAL, 20)); //Tahoma
+	        Text sceneTitle = new Text("Dear " + ControllerFactory.of().getCurrentUser().getId() +  ", Welcome to library system.");
+			sceneTitle.setFont(Font.font("Harlow Solid Italic", FontWeight.NORMAL, 20));
 
 	        grid.add(sceneTitle, 0, 0, 2, 1);
 	        grid.add(hbLeft, 0, 1);
 	        grid.add(hbRight, 1, 1);
 
-	        if (Auth.BOTH.equals(this.user.getAuthorization()) ||
-	        		Auth.LIBRARIAN.equals(this.user.getAuthorization()) ){
-		        Button checkOutIn = new Button("Checkout a Book");
+	        if (Auth.BOTH.equals(user.getAuthorization()) ||
+	        		Auth.LIBRARIAN.equals(user.getAuthorization()) ){
+		        Button checkOutIn = new Button("Check out");
 		        checkOutIn.setMinSize(150, 20);
 		        checkOutIn.setAlignment(Pos.CENTER_LEFT);
 		        checkOutIn.setOnAction((e) -> {
@@ -77,9 +67,9 @@ public class OperationWindow extends  Stage implements LibWindow{
 	        }
 
 
-	        if (Auth.BOTH.equals(this.user.getAuthorization()) ||
-	        		Auth.ADMIN.equals(this.user.getAuthorization()) ){
-		        Button addBookCopy = new Button("Add a Book Copy");
+	        if (Auth.BOTH.equals(user.getAuthorization()) ||
+	        		Auth.ADMIN.equals(user.getAuthorization()) ){
+		        Button addBookCopy = new Button("Add book copy");
 		        addBookCopy.setMinSize(150, 20);
 		        addBookCopy.setAlignment(Pos.CENTER_LEFT);
 		        addBookCopy.setOnAction((e) -> {
@@ -97,12 +87,14 @@ public class OperationWindow extends  Stage implements LibWindow{
 		        addBook.setMinSize(150, 20);
 		        addBook.setAlignment(Pos.CENTER_LEFT);
 		        addBook.setOnAction((e) -> {
+		        	Start.showAddBookWindow(true);
 		        });
 
 		        Button print = new Button("Print");
 		        print.setMinSize(150, 20);
 		        print.setAlignment(Pos.CENTER_LEFT);
 		        print.setOnAction((e) -> {
+		        	Start.showPrintWindow();
 		        });
 
 		        Button overDueList = new Button("Overdue Book Copies");
@@ -127,6 +119,7 @@ public class OperationWindow extends  Stage implements LibWindow{
 	        logout.setAlignment(Pos.CENTER_LEFT);
 	        logout.setOnAction((e) -> {
         		Start.hideAllWindows();
+        		Start.destroyAllWindows();
         		Start.primStage().show();
 	        });
 	        hbLeft.getChildren().add(logout);
@@ -150,7 +143,9 @@ public class OperationWindow extends  Stage implements LibWindow{
 		isInitialized = val;
 	}
 
-    public void refreshBookList() {
+    public void refreshBookList(HashMap<String,Book> booksMap) {
+		this.booksMap.clear();
+		this.booksMap.putAll(booksMap);
     	if (tbv != null) {
     		tbv.getItems().clear();
             this.booksMap.forEach((r,v) -> {

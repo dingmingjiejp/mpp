@@ -1,6 +1,12 @@
 package ui.utils;
 
-import business.*;
+import java.time.format.DateTimeFormatter;
+
+import business.Address;
+import business.Author;
+import business.Book;
+import business.BookCopy;
+import business.CheckOutRecordEntry;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -8,16 +14,11 @@ import javafx.scene.control.TableView;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
-import ui.OperationWindow;
-
-import java.time.format.DateTimeFormatter;
-import java.util.List;
-import java.util.stream.Collectors;
 
 public final class WindowUtils {
 
-    public static TableView createBookListTableView() {
-        TableView table = new TableView<>();
+    public static TableView<Book> createBookListTableView() {
+        TableView<Book> table = new TableView<>();
 
         // Add extra columns if necessary:
         TableColumn<Book, String> colIsbn = new TableColumn<>("isbn");
@@ -68,8 +69,8 @@ public final class WindowUtils {
         return table;
     }
 
-    public static TableView createCheckOutRecordEntryListTableView() {
-        TableView table = new TableView<>();
+    public static TableView<CheckOutRecordEntry> createCheckOutRecordEntryListTableView() {
+        TableView<CheckOutRecordEntry>  table = new TableView<>();
 
         // Add extra columns if necessary:
         TableColumn<CheckOutRecordEntry, String> colIsbn = new TableColumn<>("isbn");
@@ -123,6 +124,53 @@ public final class WindowUtils {
         table.getColumns().add(colDueDate);
 
         table.setPrefSize(800, 500);
+        table.setColumnResizePolicy((param) -> true );
+
+        table.setPlaceholder(new Label(""));
+        return table;
+    }
+
+    public static TableView<Author> createAuthorListTableView() {
+        TableView<Author>  table = new TableView<>();
+
+        // Add extra columns if necessary:
+        TableColumn<Author, String> colFirstName = new TableColumn<>("firstName");
+        colFirstName.setMinWidth(80);
+        colFirstName.setCellValueFactory(data -> {
+            return new ReadOnlyStringWrapper(data.getValue().getFirstName());
+        });
+        table.getColumns().add(colFirstName);
+
+        TableColumn<Author, String> colLastName = new TableColumn<>("lastName");
+        colLastName.setMinWidth(80);
+        colLastName.setCellValueFactory(data -> {
+            return new ReadOnlyStringWrapper(data.getValue().getLastName());
+        });
+        table.getColumns().add(colLastName);
+
+        TableColumn<Author, String> colTelephone = new TableColumn<>("telephone");
+        colTelephone.setMinWidth(80);
+        colTelephone.setCellValueFactory(data -> {
+            return new ReadOnlyStringWrapper(data.getValue().getTelephone());
+        });
+        table.getColumns().add(colTelephone);
+
+        TableColumn<Author, String> colBio = new TableColumn<>("bio");
+        colBio.setMinWidth(80);
+        colBio.setCellValueFactory(data -> {
+            return new ReadOnlyStringWrapper(data.getValue().getBio());
+        });
+        table.getColumns().add(colBio);
+
+        TableColumn<Author, String> colAddress = new TableColumn<>("address");
+        colAddress.setMinWidth(150);
+        colAddress.setCellValueFactory(data -> {
+        	Address address = data.getValue().getAddress();
+            return new ReadOnlyStringWrapper(address != null ? address.toString() : "");
+        });
+        table.getColumns().add(colAddress);
+
+        table.setPrefSize(500, 250);
         table.setColumnResizePolicy((param) -> true );
 
         table.setPlaceholder(new Label(""));
