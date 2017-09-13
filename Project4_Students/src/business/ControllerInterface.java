@@ -15,8 +15,13 @@ public interface ControllerInterface {
     HashMap<String, LibraryMember> getMembersMap();
     HashMap<String, Book> searchBooks(String isbn);
     void validateCheckOutForm(String memberId, String isbn) throws ValidationException;
+    void validateAddMemberForm(String memberId, String firstName, String lastName,
+    		String telephone, String street, String city, String state, String zip) throws ValidationException;
     LibraryMember getLibraryMember(String memberId);
     void checkOut(String memberId, String isbn) throws ValidationException;
     void addACopy(Book book);
+    void addMember(String memberId, String firstName, String lastName,
+    		String telephone, String street, String city, String state, String zip);
     void updateBooksMap();
+    void updateMembersMap();
 }

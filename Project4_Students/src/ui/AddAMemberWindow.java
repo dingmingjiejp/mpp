@@ -5,9 +5,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import business.Author;
+import business.Book;
 import business.ControllerFactory;
 import business.ControllerInterface;
 import business.LibraryMember;
+import business.ValidationException;
 import dataaccess.User;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.event.ActionEvent;
@@ -25,6 +27,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
@@ -65,7 +68,9 @@ public class AddAMemberWindow extends Stage implements LibWindow{
 	        grid.setPadding(new Insets(25, 25, 25, 25));
 
 	        VBox hbBottom = new VBox(10);
-	        hbBottom.setAlignment(Pos.BOTTOM_CENTER);
+	        VBox hbLeft = new VBox(10);
+	        hbLeft.setAlignment(Pos.TOP_LEFT);
+	        hbBottom.setAlignment(Pos.BOTTOM_LEFT);
 
 	        tbv = new TableView<>();
 	        initMemberListView(tbv);
@@ -78,30 +83,16 @@ public class AddAMemberWindow extends Stage implements LibWindow{
 	        gridMember.setVgap(10);
 
 	        grid.add(scenetitle, 0, 0, 2, 1);
-	        grid.add(gridMember, 0, 1, 2, 1);
-	        grid.add(tbv, 0, 2, 2, 1);
-	        grid.add(hbBottom, 0, 3, 2, 1);
+	        grid.add(gridMember, 0, 1);
+	        grid.add(tbv, 1, 1);
+	        grid.add(hbBottom, 0, 2, 2, 1);
 
 	        Scene scene = new Scene(grid, 725, 595);
 	        setScene(scene);
 	        this.INSTANCE.setResizable(false);
 	        this.INSTANCE.sizeToScene();
 
-
-//	        Label lblMemberId = new Label("Member ID: ");
-//	        gridMember.add(lblMemberId, 0, 0);
-//	        txtIsbn = new TextField();
-//	        txtIsbn.setMaxWidth(100);
-//	        gridIsbn.add(txtIsbn, 1, 0);
-//	        hbLeft.getChildren().add(gridIsbn);
-
-	        GridPane gridSearchBtn = new GridPane();
-	        gridSearchBtn.setHgap(10);
-//	        gridSearchBtn.setVgap(20);
-
-			GridPane gridBtn = new GridPane();
-			gridBtn.setHgap(20);
-			gridBtn.setVgap(20);
+	        initMemberGrid(gridMember);
 
 	        Button btnBack = new Button("< Back");
 	        btnBack.setMinSize(150, 20);
@@ -109,12 +100,112 @@ public class AddAMemberWindow extends Stage implements LibWindow{
 	        btnBack.setOnAction((e) -> {
 	        	Start.showOperationWindow();
 	        });
-	        gridBtn.add(btnBack, 0, 0);
+	        hbBottom.getChildren().add(btnBack);
 
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
 		setInitialized(true);
+	}
+
+	private GridPane initMemberGrid(GridPane gridMember) throws ValidationException {
+		Label lblMemberId = new Label("Member ID: ");
+        gridMember.add(lblMemberId, 0, 0);
+        txtMemberId = new TextField();
+        txtMemberId.setMaxWidth(100);
+        gridMember.add(txtMemberId, 1, 0);
+
+        Label lblFirstname = new Label("First name: ");
+        gridMember.add(lblFirstname, 0, 1);
+        txtFirstname = new TextField();
+        txtFirstname.setMaxWidth(100);
+        gridMember.add(txtFirstname, 1, 1);
+
+        Label lblLastname = new Label("Last name: ");
+        gridMember.add(lblLastname, 0, 2);
+        txtLastname = new TextField();
+        txtLastname.setMaxWidth(100);
+        gridMember.add(txtLastname, 1, 2);
+
+        Label lblTelephone = new Label("Telephone: ");
+        gridMember.add(lblTelephone, 0, 3);
+        txtTelephone = new TextField();
+        txtTelephone.setMaxWidth(100);
+        gridMember.add(txtTelephone, 1, 3);
+
+        Label lblStreet = new Label("Street: ");
+        gridMember.add(lblStreet, 0, 4);
+        txtStreet = new TextField();
+        txtStreet.setMaxWidth(100);
+        gridMember.add(txtStreet, 1, 4);
+
+        Label lblCity = new Label("City: ");
+        gridMember.add(lblCity, 0, 5);
+        txtCity = new TextField();
+        txtCity.setMaxWidth(100);
+        gridMember.add(txtCity, 1, 5);
+
+        Label lblState = new Label("State: ");
+        gridMember.add(lblState, 0, 6);
+        txtState = new TextField();
+        txtState.setMaxWidth(100);
+        gridMember.add(txtState, 1, 6);
+
+        Label lblZip = new Label("Zip: ");
+        gridMember.add(lblZip, 0, 7);
+        txtZip = new TextField();
+        txtZip.setMaxWidth(100);
+        gridMember.add(txtZip, 1, 7);
+
+        gridMember.add(initBtnAdd(), 0, 8, 2, 1);
+
+        return gridMember;
+	}
+
+	private Button initBtnAdd() throws ValidationException {
+		Button btnAdd = new Button("Add");
+		btnAdd.setMinSize(150, 20);
+		btnAdd.setAlignment(Pos.BOTTOM_CENTER);
+		btnAdd.setOnAction((e) -> {
+			ControllerInterface ci = ControllerFactory.of();
+			try {
+				ci.validateAddMemberForm(txtMemberId.getText().trim(),
+						txtFirstname.getText().trim(),
+						txtLastname.getText().trim(),
+						txtState.getText().trim(),
+						txtCity.getText().trim(),
+						txtStreet.getText().trim(),
+						txtTelephone.getText().trim(),
+						txtZip.getText().trim());
+			} catch(ValidationException ex) {
+				Alert alert = new Alert(AlertType.ERROR, ex.getMessage(),
+    					ButtonType.OK);
+    			alert.setTitle("Add a new library book");
+    			alert.setHeaderText("Validation error");
+    			alert.show();
+    			return;
+			}
+
+			String memberId = txtMemberId.getText().trim();
+			ci.addMember(txtMemberId.getText().trim(),
+					txtFirstname.getText().trim(),
+					txtLastname.getText().trim(),
+					txtState.getText().trim(),
+					txtCity.getText().trim(),
+					txtStreet.getText().trim(),
+					txtTelephone.getText().trim(),
+					txtZip.getText().trim());
+			updateMembersMap(ci.getMembersMap());
+			refreshMemberList();
+
+			resetFields();
+			Alert alert = new Alert(AlertType.INFORMATION, "The new library member with member ID '" +
+					memberId + "' was added successfully.", ButtonType.OK);
+			alert.setTitle("Add a new library member");
+			alert.setHeaderText("New library member was added");
+			alert.show();
+        });
+        return btnAdd;
 	}
 
 	private void initMemberListView(TableView<LibraryMember> table) {
@@ -146,8 +237,53 @@ public class AddAMemberWindow extends Stage implements LibWindow{
         });
         table.getColumns().add(colLastname);
 
-        table.setPrefSize(500, 500);
-        table.setMaxHeight(400);
+        TableColumn<LibraryMember, String> colTelephone = new TableColumn<>("Telephone");
+        colTelephone.setMinWidth(50);
+        colTelephone.setCellValueFactory(data -> {
+        	LibraryMember rowValue = data.getValue();
+            String cellValue = rowValue.getTelephone();
+            return new ReadOnlyStringWrapper(cellValue);
+        });
+        table.getColumns().add(colTelephone);
+
+        TableColumn<LibraryMember, String> colStreet = new TableColumn<>("Street");
+        colStreet.setMinWidth(50);
+        colStreet.setCellValueFactory(data -> {
+        	LibraryMember rowValue = data.getValue();
+            String cellValue = rowValue.getAddress().getStreet();
+            return new ReadOnlyStringWrapper(cellValue);
+        });
+        table.getColumns().add(colStreet);
+
+        TableColumn<LibraryMember, String> colCity = new TableColumn<>("City");
+        colCity.setMinWidth(50);
+        colCity.setCellValueFactory(data -> {
+        	LibraryMember rowValue = data.getValue();
+            String cellValue = rowValue.getAddress().getCity();
+            return new ReadOnlyStringWrapper(cellValue);
+        });
+        table.getColumns().add(colCity);
+
+        TableColumn<LibraryMember, String> colState = new TableColumn<>("State");
+        colState.setMinWidth(50);
+        colState.setCellValueFactory(data -> {
+        	LibraryMember rowValue = data.getValue();
+            String cellValue = rowValue.getAddress().getState();
+            return new ReadOnlyStringWrapper(cellValue);
+        });
+        table.getColumns().add(colState);
+
+
+        TableColumn<LibraryMember, String> colZip = new TableColumn<>("Zip");
+        colZip.setMinWidth(50);
+        colZip.setCellValueFactory(data -> {
+        	LibraryMember rowValue = data.getValue();
+            String cellValue = rowValue.getAddress().getZip();
+            return new ReadOnlyStringWrapper(cellValue);
+        });
+        table.getColumns().add(colZip);
+
+        table.setPrefSize(450, 450);
         table.setColumnResizePolicy((param) -> true );
 	}
 
@@ -156,13 +292,23 @@ public class AddAMemberWindow extends Stage implements LibWindow{
 		return isInitialized;
 	}
 
-
 	@Override
 	public void setInitialized(boolean val) {
 		isInitialized = val;
 	}
 
-	public void updateBooksMap(HashMap<String,LibraryMember> membersMap) {
+	private void resetFields() {
+		txtMemberId.setText("");
+		txtFirstname.setText("");
+		txtLastname.setText("");
+		txtState.setText("");
+		txtCity.setText("");
+		txtStreet.setText("");
+		txtTelephone.setText("");
+		txtZip.setText("");
+	}
+
+	public void updateMembersMap(HashMap<String,LibraryMember> membersMap) {
 		this.membersMap = membersMap;
 	}
 

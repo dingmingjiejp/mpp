@@ -127,4 +127,39 @@ public class SystemController implements ControllerInterface {
         updateBooksMap();
     }
 
+    @Override
+    public void validateAddMemberForm(String memberId, String firstName, String lastName,
+    		String telephone, String street, String city, String state, String zip) throws ValidationException {
+
+    	if (this.membersMap.containsKey(memberId)) {
+            throw new ValidationException("Member ID already exists!");
+        }
+
+        if(memberId.isEmpty() ||
+        		firstName.isEmpty() ||
+        		lastName.isEmpty() ||
+    			state.isEmpty() ||
+    			city.isEmpty() ||
+    			street.isEmpty() ||
+    			telephone.isEmpty() ||
+    			zip.isEmpty() ) {
+        	throw new ValidationException("All fields are required!");
+    	}
+
+    }
+
+    @Override
+    public void addMember(String memberId, String firstName, String lastName,
+    		String telephone, String street, String city, String state, String zip) {
+    	Address address = new Address(street, city, state, zip);
+    	LibraryMember member = new LibraryMember(memberId, firstName, lastName, telephone, address);
+        da.saveNewMember(member);
+        updateMembersMap();
+    }
+
+    @Override
+    public void updateMembersMap() {
+        membersMap = da.readMemberMap();
+    };
+
 }
