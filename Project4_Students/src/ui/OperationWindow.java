@@ -22,6 +22,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import ui.utils.WindowUtils;
 
 public class OperationWindow extends  Stage implements LibWindow{
 
@@ -32,7 +33,7 @@ public class OperationWindow extends  Stage implements LibWindow{
 	private HashMap<String,Book> booksMap;
 	private TableView<Book> tbv;
 
-	public OperationWindow() {
+	private OperationWindow() {
 	}
 
 	public void setData(User user, HashMap<String,Book> booksMap) {
@@ -53,24 +54,24 @@ public class OperationWindow extends  Stage implements LibWindow{
 	        VBox hbRight = new VBox();
 	        hbLeft.setAlignment(Pos.TOP_LEFT);
 
-	        tbv = new TableView<>();
-	        hbRight.getChildren().add(tbv);
-	        initBookListView(tbv);
+	        this.tbv = WindowUtils.createBookListTableView();
+	        hbRight.getChildren().add(this.tbv);
 
-	        Text scenetitle = new Text("Dear " + this.user.getId() +  ", Welcome to library system.");
-	        scenetitle.setFont(Font.font("Harlow Solid Italic", FontWeight.NORMAL, 20)); //Tahoma
 
-	        grid.add(scenetitle, 0, 0, 2, 1);
+	        Text sceneTitle = new Text("Dear " + this.user.getId() +  ", Welcome to library system.");
+			sceneTitle.setFont(Font.font("Harlow Solid Italic", FontWeight.NORMAL, 20)); //Tahoma
+
+	        grid.add(sceneTitle, 0, 0, 2, 1);
 	        grid.add(hbLeft, 0, 1);
 	        grid.add(hbRight, 1, 1);
 
 	        if (Auth.BOTH.equals(this.user.getAuthorization()) ||
 	        		Auth.LIBRARIAN.equals(this.user.getAuthorization()) ){
-		        Button checkOutIn = new Button("Check out/Check in");
+		        Button checkOutIn = new Button("Check out");
 		        checkOutIn.setMinSize(150, 20);
 		        checkOutIn.setAlignment(Pos.CENTER_LEFT);
 		        checkOutIn.setOnAction((e) -> {
-
+					Start.showCheckInOutWindow();
 		        });
 		        hbLeft.getChildren().add(checkOutIn);
 	        }
@@ -129,62 +130,11 @@ public class OperationWindow extends  Stage implements LibWindow{
 	        });
 	        hbLeft.getChildren().add(logout);
 
+	        this.isInitialized = true;
 
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
-	}
-
-	private void initBookListView(TableView<Book> table) {
-        // Add extra columns if necessary:
-        TableColumn<Book, String> colIsbn = new TableColumn<>("isbn");
-        colIsbn.setMinWidth(80);
-        colIsbn.setCellValueFactory(data -> {
-            Book rowValue = data.getValue();
-            String cellValue = rowValue.getIsbn();
-            return new ReadOnlyStringWrapper(cellValue);
-        });
-        table.getColumns().add(colIsbn);
-
-        TableColumn<Book, String> colTitle = new TableColumn<>("title");
-        colTitle.setMinWidth(80);
-        colTitle.setCellValueFactory(data -> {
-            Book rowValue = data.getValue();
-            String cellValue = rowValue.getTitle();
-            return new ReadOnlyStringWrapper(cellValue);
-        });
-        table.getColumns().add(colTitle);
-
-        TableColumn<Book, String> colAuthors = new TableColumn<>("authors");
-        colAuthors.setMinWidth(80);
-        colAuthors.setCellValueFactory(data -> {
-            Book rowValue = data.getValue();
-            List<Author> authors = rowValue.getAuthors();
-            String authorsName = authors.stream().map(OperationWindow::getAuthorName ).collect(Collectors.joining(","));
-            return new ReadOnlyStringWrapper(authorsName);
-        });
-        table.getColumns().add(colAuthors);
-
-        TableColumn<Book, String> colCopies = new TableColumn<>("copies");
-        colCopies.setMinWidth(80);
-        colCopies.setCellValueFactory(data -> {
-            Book rowValue = data.getValue();
-            BookCopy[] copyies = rowValue.getCopies();
-            int availableNum = 0;
-            for (BookCopy copy : copyies) {
-            	if (copy.isAvailable()) {
-            		availableNum ++;
-            	}
-            }
-            return new ReadOnlyStringWrapper( availableNum + "/" + copyies.length);
-        });
-        table.getColumns().add(colCopies);
-        table.setPrefSize(500, 500);
-        table.setColumnResizePolicy((param) -> true );
-	}
-
-	public static String getAuthorName(Author author) {
-		return author.getFirstName() + " " + author.getLastName();
 	}
 
 

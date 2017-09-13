@@ -9,7 +9,6 @@ import business.Book;
 import business.BookCopy;
 import business.ControllerFactory;
 import business.ControllerInterface;
-import dataaccess.Auth;
 import dataaccess.User;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.event.ActionEvent;
@@ -23,7 +22,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -117,7 +115,7 @@ public class AddACopyWindow extends Stage implements LibWindow{
 	        btnBack.setMinSize(150, 20);
 	        btnBack.setAlignment(Pos.BOTTOM_LEFT);
 	        btnBack.setOnAction((e) -> {
-	        	Start.showOpertionWindow();
+	        	Start.showOperationWindow();
 	        });
 	        hbBottom.getChildren().add(btnBack);
 

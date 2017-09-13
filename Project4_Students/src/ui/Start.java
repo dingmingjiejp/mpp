@@ -45,7 +45,7 @@ public class Start extends Application {
 		AllBooksWindow.INSTANCE,
 		AddACopy.INSTANCE,
 		OperationWindow.INSTANCE,
-
+		CheckOutWindow.INSTANCE,
 		AddACopyWindow.INSTANCE
 	};
 
@@ -55,7 +55,8 @@ public class Start extends Application {
 			st.hide();
 		}
 	}
-	public static void showOpertionWindow() {
+
+	public static void showOperationWindow() {
 		hideAllWindows();
 		ControllerInterface controller = ControllerFactory.of();
 		if(!OperationWindow.INSTANCE.isInitialized()) {
@@ -78,6 +79,16 @@ public class Start extends Application {
 		AddACopyWindow.INSTANCE.refreshBookList();;
 		AddACopyWindow.INSTANCE.show();
 	}
+
+	public static void showCheckInOutWindow() {
+		hideAllWindows();
+		if(!CheckOutWindow.INSTANCE.isInitialized()) {
+			CheckOutWindow.INSTANCE.init();
+		}
+		CheckOutWindow.INSTANCE.reset();
+		CheckOutWindow.INSTANCE.show();
+	}
+
 
 	@Override
 	public void start(Stage primaryStage) {
