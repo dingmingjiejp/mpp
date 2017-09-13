@@ -101,6 +101,7 @@ public class OperationWindow extends  Stage implements LibWindow{
 		        overDueList.setMinSize(150, 20);
 		        overDueList.setAlignment(Pos.CENTER_LEFT);
 		        overDueList.setOnAction((e) -> {
+		        	Start.showOverdueWindow();
 		        });
 
 		        hbLeft.getChildren().add(addBookCopy);

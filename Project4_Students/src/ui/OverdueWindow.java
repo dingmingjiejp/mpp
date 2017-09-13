@@ -1,0 +1,244 @@
+package ui;
+
+import java.util.HashMap;
+
+import business.Book;
+import business.BookCopy;
+import business.CheckOutRecordEntry;
+import business.ControllerFactory;
+import business.ControllerInterface;
+import business.LibraryMember;
+import business.Overdue;
+import business.ValidationException;
+import dataaccess.User;
+import javafx.beans.property.ReadOnlyStringWrapper;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
+import javafx.stage.Stage;
+
+public class OverdueWindow extends Stage implements LibWindow{
+
+	public static final OverdueWindow INSTANCE = new OverdueWindow();
+
+	private boolean isInitialized = false;
+	private User user;
+	private HashMap<String,Overdue> overduesMap;
+	private TableView<Overdue> tbv;
+	private TextField txtIsbn;
+
+	public OverdueWindow() {
+	}
+
+	public void setData(User user, HashMap<String,Overdue> overduesMap) {
+		this.user = user;
+		this.overduesMap = overduesMap;
+	}
+
+	@Override
+	public void init() {
+		try {
+	        GridPane grid = new GridPane();
+	        grid.setAlignment(Pos.TOP_CENTER);
+	        grid.setHgap(20);
+	        grid.setVgap(20);
+	        grid.setPadding(new Insets(25, 25, 25, 25));
+
+	        VBox hbBottom = new VBox(10);
+	        hbBottom.setAlignment(Pos.BOTTOM_LEFT);
+
+	        GridPane gridSearch = new GridPane();
+	        gridSearch.setHgap(10);
+
+	        tbv = new TableView<>();
+	        initOverdueListView(tbv);
+
+	        Text scenetitle = new Text("Overdue");
+	        scenetitle.setFont(Font.font("Harlow Solid Italic", FontWeight.NORMAL, 20)); //Tahoma
+
+	        grid.add(scenetitle, 0, 0, 2, 1);
+	        grid.add(gridSearch, 0, 1, 2, 1);
+	        grid.add(tbv, 0, 2, 2, 1);
+	        grid.add(hbBottom, 0, 3, 2, 1);
+
+	        Scene scene = new Scene(grid, 725, 595);
+	        setScene(scene);
+	        this.INSTANCE.setResizable(false);
+	        this.INSTANCE.sizeToScene();
+
+	        Label lblIsbn = new Label("ISBN: ");
+	        gridSearch.add(lblIsbn, 0, 0);
+	        txtIsbn = new TextField();
+	        txtIsbn.setMaxWidth(100);
+	        gridSearch.add(txtIsbn, 1, 0);
+
+	        Button searchBtn = new Button("Search");
+			searchBtn.setOnAction(new EventHandler<ActionEvent>() {
+	        	@Override
+	        	public void handle(ActionEvent e) {
+	        		ControllerInterface ci = ControllerFactory.of();
+	    			try {
+	    				ci.validateOverdueForm(txtIsbn.getText().trim());
+	    			} catch(ValidationException ex) {
+	    				Alert alert = new Alert(AlertType.ERROR, ex.getMessage(),
+	        					ButtonType.OK);
+	        			alert.setTitle("Failed to find a book by ISBN");
+	        			alert.setHeaderText("Validation error");
+	        			alert.show();
+	        			return;
+	    			}
+	        		searchForOverdue(txtIsbn.getText().trim());
+	        	}
+	        });
+			gridSearch.add(searchBtn, 3, 0);
+
+	        Button btnBack = new Button("< Back");
+	        btnBack.setMinSize(150, 20);
+	        btnBack.setAlignment(Pos.BOTTOM_LEFT);
+	        btnBack.setOnAction((e) -> {
+	        	Start.showOperationWindow();
+	        });
+	        hbBottom.getChildren().add(btnBack);
+
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		setInitialized(true);
+	}
+
+	private void searchForOverdue(String isbn) {
+		ControllerInterface controller = ControllerFactory.of();
+		HashMap<String, Overdue> overdues = controller.getOverdues(isbn);
+//		ControllerInterface controller = ControllerFactory.of();
+//		HashMap<String, Overdue> overdues = new HashMap<String, Overdue>();
+//
+//		HashMap<String, Book> books = controller.getBooksMap();
+//		books.forEach((r,v) -> {
+//			for(BookCopy copy: v.getCopies()) {
+//				if(copy.isAvailable()) {
+//					Overdue o = new Overdue(copy);
+//					overdues.put(o.getKey(), o);
+////					tbv.getItems().add(o);
+//				}
+//			}
+//        });
+//
+//		HashMap<String, LibraryMember> members  = controller.getMembersMap();
+//		members.forEach((r,v) -> {
+//			for(CheckOutRecordEntry entry: v.getCheckOutRecord().getEntryList()) {
+//				String entryKey = Overdue.generateKey(entry.getBookCopy());
+//				if(overdues.containsKey(entryKey)) {
+//					if(!overdues.get(entryKey).getEntry().getBookCopy().isAvailable()) {
+//						if(entry.getCheckOutDate().isAfter(overdues.get(entryKey).getEntry().getCheckOutDate())) {
+//							Overdue o = new Overdue(entry);
+//							overdues.put(o.getKey(), o);
+//						}
+//					}
+//				} else {
+//					Overdue o = new Overdue(entry);
+//					overdues.put(o.getKey(), o);
+//				}
+//			}
+//        });
+		refreshOverdueList();
+
+    	if (tbv != null) {
+			tbv.getItems().clear();
+	        overdues.forEach((r,v) -> {
+	        	tbv.getItems().add(v);
+	        });
+		}
+	}
+
+
+	private void initOverdueListView(TableView<Overdue> table) {
+        // Add extra columns if necessary:
+        TableColumn<Overdue, String> colIsbn = new TableColumn<>("ISBN");
+        colIsbn.setMinWidth(30);
+        colIsbn.setCellValueFactory(data -> {
+        	Overdue rowValue = data.getValue();
+            String cellValue = rowValue.getEntry().getBookCopy().getBook().getIsbn();
+            return new ReadOnlyStringWrapper(cellValue);
+        });
+        table.getColumns().add(colIsbn);
+
+        TableColumn<Overdue, String> colTitle = new TableColumn<>("Title");
+        colTitle.setMinWidth(50);
+        colTitle.setCellValueFactory(data -> {
+        	Overdue rowValue = data.getValue();
+            String cellValue = rowValue.getEntry().getBookCopy().getBook().getTitle();
+            return new ReadOnlyStringWrapper(cellValue);
+        });
+        table.getColumns().add(colTitle);
+
+        TableColumn<Overdue, String> colCopyNum = new TableColumn<>("Copy Num");
+        colCopyNum.setMinWidth(50);
+        colCopyNum.setCellValueFactory(data -> {
+        	Overdue rowValue = data.getValue();
+            String cellValue = "" + rowValue.getEntry().getBookCopy().getCopyNum();
+            return new ReadOnlyStringWrapper(cellValue);
+        });
+        table.getColumns().add(colCopyNum);
+
+        TableColumn<Overdue, String> colStatus = new TableColumn<>("Status");
+        colStatus.setMinWidth(50);
+        colStatus.setCellValueFactory(data -> {
+        	Overdue rowValue = data.getValue();
+            String cellValue = (rowValue.getEntry().getBookCopy().isAvailable() ? "Available" : "Out");
+            return new ReadOnlyStringWrapper(cellValue);
+        });
+        table.getColumns().add(colStatus);
+
+        TableColumn<Overdue, String> colMemberId = new TableColumn<>("Member ID");
+        colMemberId.setMinWidth(50);
+        colMemberId.setCellValueFactory(data -> {
+        	Overdue rowValue = data.getValue();
+            String cellValue = rowValue.displayMemberId();
+            return new ReadOnlyStringWrapper(cellValue);
+        });
+        table.getColumns().add(colMemberId);
+
+        TableColumn<Overdue, String> colDueDate = new TableColumn<>("Due date");
+        colDueDate.setMinWidth(50);
+        colDueDate.setCellValueFactory(data -> {
+        	Overdue rowValue = data.getValue();
+            String cellValue = rowValue.displayDueDate();
+            return new ReadOnlyStringWrapper(cellValue);
+        });
+        table.getColumns().add(colDueDate);
+
+
+        table.setPrefSize(600, 400);
+        table.setColumnResizePolicy((param) -> true );
+	}
+
+	@Override
+	public boolean isInitialized() {
+		return isInitialized;
+	}
+
+	@Override
+	public void setInitialized(boolean val) {
+		isInitialized = val;
+	}
+
+    public void refreshOverdueList() {
+    	tbv.getItems().clear();
+    }
+
+}

@@ -272,4 +272,18 @@ public class SystemController implements ControllerInterface {
         return membersMap;
     }
 
+    @Override
+    public HashMap<String, Overdue> getOverdues(String isbn) {
+    	HashMap<String, Overdue> retval = da.findOverduesMap(booksMap.get(isbn));
+		return retval;
+    }
+
+
+    @Override
+    public void validateOverdueForm(String isbn) throws ValidationException {
+    	 if (!this.booksMap.containsKey(isbn)) {
+             throw new ValidationException("Book does not exist!");
+         }
+    }
+
 }

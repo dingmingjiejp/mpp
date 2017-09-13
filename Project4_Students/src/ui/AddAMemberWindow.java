@@ -1,19 +1,13 @@
 package ui;
 
 import java.util.HashMap;
-import java.util.List;
-import java.util.stream.Collectors;
 
-import business.Author;
-import business.Book;
 import business.ControllerFactory;
 import business.ControllerInterface;
 import business.LibraryMember;
 import business.ValidationException;
 import dataaccess.User;
 import javafx.beans.property.ReadOnlyStringWrapper;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -27,7 +21,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
@@ -208,6 +201,7 @@ public class AddAMemberWindow extends Stage implements LibWindow{
         return btnAdd;
 	}
 
+	@SuppressWarnings("unchecked")
 	private void initMemberListView(TableView<LibraryMember> table) {
         // Add extra columns if necessary:
         TableColumn<LibraryMember, String> colmemberId = new TableColumn<>("MemberID");
@@ -253,7 +247,6 @@ public class AddAMemberWindow extends Stage implements LibWindow{
             String cellValue = rowValue.getAddress().getStreet();
             return new ReadOnlyStringWrapper(cellValue);
         });
-        table.getColumns().add(colStreet);
 
         TableColumn<LibraryMember, String> colCity = new TableColumn<>("City");
         colCity.setMinWidth(50);
@@ -262,7 +255,6 @@ public class AddAMemberWindow extends Stage implements LibWindow{
             String cellValue = rowValue.getAddress().getCity();
             return new ReadOnlyStringWrapper(cellValue);
         });
-        table.getColumns().add(colCity);
 
         TableColumn<LibraryMember, String> colState = new TableColumn<>("State");
         colState.setMinWidth(50);
@@ -271,8 +263,6 @@ public class AddAMemberWindow extends Stage implements LibWindow{
             String cellValue = rowValue.getAddress().getState();
             return new ReadOnlyStringWrapper(cellValue);
         });
-        table.getColumns().add(colState);
-
 
         TableColumn<LibraryMember, String> colZip = new TableColumn<>("Zip");
         colZip.setMinWidth(50);
@@ -281,7 +271,10 @@ public class AddAMemberWindow extends Stage implements LibWindow{
             String cellValue = rowValue.getAddress().getZip();
             return new ReadOnlyStringWrapper(cellValue);
         });
-        table.getColumns().add(colZip);
+
+        TableColumn<LibraryMember, String> colAddress = new TableColumn<>("Address");
+        colAddress.getColumns().addAll(colStreet, colCity, colState, colZip);
+        table.getColumns().add(colAddress);
 
         table.setPrefSize(450, 450);
         table.setColumnResizePolicy((param) -> true );

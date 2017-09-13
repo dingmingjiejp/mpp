@@ -46,4 +46,10 @@ public interface ControllerInterface {
 
 	void validateAddMemberForm(String memberId, String firstName, String lastName, String telephone, String street,
 			String city, String state, String zip) throws ValidationException;
+
+	HashMap<String, Overdue> getOverdues(String isbn);
+
+	void validateOverdueForm(String isbn) throws ValidationException;
+
+
 }

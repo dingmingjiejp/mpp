@@ -11,7 +11,10 @@ import java.util.List;
 import java.util.Map.Entry;
 
 import business.Book;
+import business.BookCopy;
+import business.CheckOutRecordEntry;
 import business.LibraryMember;
+import business.Overdue;
 
 
 public class DataAccessFacade implements DataAccess {
@@ -52,6 +55,7 @@ public class DataAccessFacade implements DataAccess {
 		return (HashMap<String,Book>) readFromStorage(StorageType.BOOKS);
 	}
 
+	@Override
 	public HashMap<String,Book> findBooksMap(String isbn) {
 		//Returns a Map with name/value pairs being
 		//   isbn -> Book
@@ -65,6 +69,46 @@ public class DataAccessFacade implements DataAccess {
 		}
 		return filteredBooks;
 	}
+
+	@Override
+	public HashMap<String, Overdue> findOverduesMap(Book book) {
+		HashMap<String, Overdue> overdues = new HashMap<String, Overdue>();
+
+		HashMap<String, LibraryMember> members = readMemberMap();
+		members.forEach((r,v) -> {
+			for(CheckOutRecordEntry entry: v.getCheckOutRecord().getEntryList()) {
+				// skip if it is not the searched book
+				if(!entry.getBookCopy().getBook().equals(book)) {
+					continue;
+				}
+
+				// generate the unique key for isbn & copyNum
+				String entryKey = Overdue.generateKey(entry.getBookCopy());
+
+				if(overdues.containsKey(entryKey)) {
+					// check if it is the latest checkoutrecordentry
+					if(entry.getCheckOutDate().isAfter(overdues.get(entryKey).getEntry().getCheckOutDate())) {
+						Overdue o = new Overdue(entry);
+						overdues.put(o.getKey(), o);
+					}
+				} else {
+					Overdue o = new Overdue(entry);
+					overdues.put(o.getKey(), o);
+				}
+			}
+        });
+
+		// update book copy if it is available
+		for(BookCopy copy: book.getCopies()) {
+			if(copy.isAvailable()) {
+				Overdue o = new Overdue(copy);
+				overdues.put(o.getKey(), o);
+			}
+		}
+
+		return overdues;
+	}
+
 
 	@SuppressWarnings("unchecked")
 	public HashMap<String, LibraryMember> readMemberMap() {

@@ -15,6 +15,10 @@ public class CheckOutRecordEntry implements Serializable {
         this.bookCopy = bookCopy;
     }
 
+    public CheckOutRecordEntry(BookCopy bookCopy) {
+        this.bookCopy = bookCopy;
+    }
+
     public BookCopy getBookCopy() {
         return bookCopy;
     }

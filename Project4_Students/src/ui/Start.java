@@ -50,6 +50,7 @@ public class Start extends Application {
 		AddAuthorsWindow.INSTANCE,
 		PrintWindow.INSTANCE,
 		AddAMemberWindow.INSTANCE,
+		OverdueWindow.INSTANCE,
 	};
 
 	public static void hideAllWindows() {
@@ -146,6 +147,16 @@ public class Start extends Application {
 		AddAMemberWindow.INSTANCE.refreshMemberList();;
 		AddAMemberWindow.INSTANCE.show();
 	}
+
+	public static void showOverdueWindow() {
+		hideAllWindows();
+		if(!OverdueWindow.INSTANCE.isInitialized()) {
+			OverdueWindow.INSTANCE.init();
+		}
+		OverdueWindow.INSTANCE.refreshOverdueList();;
+		OverdueWindow.INSTANCE.show();
+	}
+
 
 	@Override
 	public void start(Stage primaryStage) {
