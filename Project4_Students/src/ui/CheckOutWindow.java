@@ -139,7 +139,7 @@ public class CheckOutWindow extends Stage implements LibWindow{
 
 
 	@Override
-	public void isInitialized(boolean val) {
+	public void setInitialized(boolean val) {
 		isInitialized = val;
 	}
 

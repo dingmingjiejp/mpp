@@ -90,6 +90,7 @@ public class OperationWindow extends  Stage implements LibWindow{
 		        addMemeber.setMinSize(150, 20);
 		        addMemeber.setAlignment(Pos.CENTER_LEFT);
 		        addMemeber.setOnAction((e) -> {
+		        	Start.showAddAMemberWindow();
 		        });
 
 		        Button addBook = new Button("Add book");
@@ -145,7 +146,7 @@ public class OperationWindow extends  Stage implements LibWindow{
 
 
 	@Override
-	public void isInitialized(boolean val) {
+	public void setInitialized(boolean val) {
 		isInitialized = val;
 	}
 

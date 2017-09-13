@@ -1,10 +1,8 @@
 package ui;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 
-import business.Book;
 import business.ControllerFactory;
 import business.ControllerInterface;
 import javafx.application.Application;
@@ -46,7 +44,8 @@ public class Start extends Application {
 		AddACopyWindow.INSTANCE,
 		OperationWindow.INSTANCE,
 		CheckOutWindow.INSTANCE,
-		AddACopyWindow.INSTANCE
+		AddACopyWindow.INSTANCE,
+		AddAMemberWindow.INSTANCE
 	};
 
 	public static void hideAllWindows() {
@@ -87,6 +86,18 @@ public class Start extends Application {
 		}
 		CheckOutWindow.INSTANCE.reset();
 		CheckOutWindow.INSTANCE.show();
+	}
+
+	public static void showAddAMemberWindow() {
+		hideAllWindows();
+		ControllerInterface controller = ControllerFactory.of();
+		if(!AddAMemberWindow.INSTANCE.isInitialized()) {
+			AddAMemberWindow.INSTANCE.setData(controller.getCurrentUser(),
+					controller.getMembersMap());
+			AddAMemberWindow.INSTANCE.init();
+		}
+		AddAMemberWindow.INSTANCE.refreshMemberList();;
+		AddAMemberWindow.INSTANCE.show();
 	}
 
 
