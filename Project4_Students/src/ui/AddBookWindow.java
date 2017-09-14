@@ -152,7 +152,6 @@ public class AddBookWindow extends Stage implements LibWindow {
     public void setAuthorList(List<Author> authors) {
     	this.authorList.clear();
     	this.authorList.addAll(authors);
-
     	String d = "";
     	for(Author a : authors) {
     		String t = a.getFirstName() + " " + a.getLastName();
