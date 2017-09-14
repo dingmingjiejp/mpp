@@ -11,8 +11,6 @@ import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
 public final class WindowUtils {
@@ -115,7 +113,7 @@ public final class WindowUtils {
 
         table.getColumns().add(colCheckOutDate);
 
-        TableColumn<CheckOutRecordEntry, String> colDueDate = new TableColumn<>("due date");
+        TableColumn<CheckOutRecordEntry, String> colDueDate = new TableColumn<>("check out date");
         colDueDate.setMinWidth(120);
         colDueDate.setCellValueFactory(data ->
                 new ReadOnlyStringWrapper(String.valueOf(data.getValue().getDueDate().format(DateTimeFormatter.BASIC_ISO_DATE)))
@@ -177,11 +175,18 @@ public final class WindowUtils {
         return table;
     }
 
+    public static Text createSceneText(String text, String className) {
+        Text sceneTitle = new Text(text);
+        sceneTitle.getStyleClass().add(className);
+        return sceneTitle;
+    }
+
     public static Text createSceneText(String text) {
         Text sceneTitle = new Text(text);
-        sceneTitle.setFont(Font.font("Harlow Solid Italic", FontWeight.NORMAL, 20));
+        sceneTitle.getStyleClass().add("sceneTitle");
         return sceneTitle;
     }
 
 
 }
+

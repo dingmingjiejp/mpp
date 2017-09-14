@@ -81,8 +81,7 @@ public class Start extends Application {
 		hideAllWindows();
 		ControllerInterface controller = ControllerFactory.of();
 		if(!AddACopyWindow.INSTANCE.isInitialized()) {
-			AddACopyWindow.INSTANCE.setData(controller.getCurrentUser(),
-					controller.getBooksMap());
+			AddACopyWindow.INSTANCE.setData(controller.getBooksMap());
 			AddACopyWindow.INSTANCE.init();
 		}
 		AddACopyWindow.INSTANCE.refreshBookList();;
@@ -140,8 +139,7 @@ public class Start extends Application {
 		hideAllWindows();
 		ControllerInterface controller = ControllerFactory.of();
 		if(!AddAMemberWindow.INSTANCE.isInitialized()) {
-			AddAMemberWindow.INSTANCE.setData(controller.getCurrentUser(),
-					controller.getMembersMap());
+			AddAMemberWindow.INSTANCE.setData(controller.getMembersMap());
 			AddAMemberWindow.INSTANCE.init();
 		}
 		AddAMemberWindow.INSTANCE.refreshMemberList();;

@@ -8,7 +8,6 @@ import business.ControllerFactory;
 import business.ControllerInterface;
 import business.Overdue;
 import business.ValidationException;
-import dataaccess.User;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -38,17 +37,10 @@ public class OverdueWindow extends Stage implements LibWindow{
 	public static final OverdueWindow INSTANCE = new OverdueWindow();
 
 	private boolean isInitialized = false;
-	private User user;
-	private HashMap<String,Overdue> overduesMap;
 	private TableView<Overdue> tbv;
 	private TextField txtIsbn;
 
 	public OverdueWindow() {
-	}
-
-	public void setData(User user, HashMap<String,Overdue> overduesMap) {
-		this.user = user;
-		this.overduesMap = overduesMap;
 	}
 
 	@Override
@@ -59,6 +51,7 @@ public class OverdueWindow extends Stage implements LibWindow{
 	        grid.setHgap(20);
 	        grid.setVgap(20);
 	        grid.setPadding(new Insets(25, 25, 25, 25));
+	        grid.getStyleClass().add(getClass().getSimpleName());
 
 	        VBox hbBottom = new VBox(10);
 	        hbBottom.setAlignment(Pos.BOTTOM_LEFT);
@@ -78,9 +71,10 @@ public class OverdueWindow extends Stage implements LibWindow{
 	        grid.add(hbBottom, 0, 3, 2, 1);
 
 	        Scene scene = new Scene(grid, 725, 595);
+	        scene.getStylesheets().add(getClass().getResource("library.css").toExternalForm());
 	        setScene(scene);
-	        this.INSTANCE.setResizable(false);
-	        this.INSTANCE.sizeToScene();
+	        setResizable(false);
+	        sizeToScene();
 
 	        Label lblIsbn = new Label("ISBN: ");
 	        gridSearch.add(lblIsbn, 0, 0);

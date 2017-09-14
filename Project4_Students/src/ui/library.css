@@ -2,6 +2,21 @@
      -fx-background-color: #fbffd1;/*#8E0000*/;
 }
 
+.OperationWindow {
+     -fx-background-color: #fbffd1;/*#8E0000*/;
+}
+
+
 .label {
    -fx-text-fill: #000099;
 }
+
+.button {
+  -fx-text-fill: #000099;
+}
+
+#sceneTitle {
+   -fx-font-family: "Harlow Solid Italic";
+	-fx-font-size:30;
+}
+

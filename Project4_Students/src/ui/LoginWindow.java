@@ -37,7 +37,7 @@ public class LoginWindow extends Stage implements LibWindow {
     public void init() {
 
         GridPane grid = new GridPane();
-        grid.setId("top-container");
+        grid.getStyleClass().add(getClass().getSimpleName());
         grid.setAlignment(Pos.CENTER);
         grid.setHgap(10);
         grid.setVgap(10);
@@ -86,7 +86,6 @@ public class LoginWindow extends Stage implements LibWindow {
         			messageBar.setFill(Start.Colors.red);
         			messageBar.setText("Error! " + ex.getMessage());
         		}
-
         	}
         });
 
