@@ -102,7 +102,7 @@ public class AddACopyWindow extends Stage implements LibWindow{
 	        });
 			gridSearchBtn.add(searchBtn, 0, 0);
 
-			Button clearBtn = new Button("Clear search");
+			Button clearBtn = new Button("Clear");
 			clearBtn.setOnAction(new EventHandler<ActionEvent>() {
 	        	@Override
 	        	public void handle(ActionEvent e) {

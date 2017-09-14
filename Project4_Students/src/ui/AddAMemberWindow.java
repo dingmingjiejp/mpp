@@ -211,7 +211,7 @@ public class AddAMemberWindow extends Stage implements LibWindow{
         table.getColumns().add(colmemberId);
 
         TableColumn<LibraryMember, String> colFirstname = new TableColumn<>("First name");
-        colFirstname.setMinWidth(50);
+        colFirstname.setMinWidth(80);
         colFirstname.setCellValueFactory(data -> {
         	LibraryMember rowValue = data.getValue();
             String cellValue = rowValue.getFirstName();
@@ -220,7 +220,7 @@ public class AddAMemberWindow extends Stage implements LibWindow{
         table.getColumns().add(colFirstname);
 
         TableColumn<LibraryMember, String> colLastname = new TableColumn<>("Last name");
-        colLastname.setMinWidth(50);
+        colLastname.setMinWidth(80);
         colLastname.setCellValueFactory(data -> {
         	LibraryMember rowValue = data.getValue();
             String cellValue = rowValue.getFirstName();
