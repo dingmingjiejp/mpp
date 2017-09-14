@@ -60,6 +60,22 @@ public class OperationWindow extends  Stage implements LibWindow{
 					Start.showCheckInOutWindow();
 		        });
 		        hbLeft.getChildren().add(checkOutIn);
+
+		        Button print = new Button("Print");
+		        print.setMinSize(150, 20);
+		        print.setAlignment(Pos.CENTER_LEFT);
+		        print.setOnAction((e) -> {
+		        	Start.showPrintWindow();
+		        });
+		        hbLeft.getChildren().add(print);
+
+		        Button overDueList = new Button("Overdue Book Copies");
+		        overDueList.setMinSize(150, 20);
+		        overDueList.setAlignment(Pos.CENTER_LEFT);
+		        overDueList.setOnAction((e) -> {
+		        	Start.showOverdueWindow();
+		        });
+		        hbLeft.getChildren().add(overDueList);
 	        }
 
 
@@ -86,25 +102,9 @@ public class OperationWindow extends  Stage implements LibWindow{
 		        	Start.showAddBookWindow(true);
 		        });
 
-		        Button print = new Button("Print");
-		        print.setMinSize(150, 20);
-		        print.setAlignment(Pos.CENTER_LEFT);
-		        print.setOnAction((e) -> {
-		        	Start.showPrintWindow();
-		        });
-
-		        Button overDueList = new Button("Overdue Book Copies");
-		        overDueList.setMinSize(150, 20);
-		        overDueList.setAlignment(Pos.CENTER_LEFT);
-		        overDueList.setOnAction((e) -> {
-		        	Start.showOverdueWindow();
-		        });
-
 		        hbLeft.getChildren().add(addBookCopy);
 		        hbLeft.getChildren().add(addMemeber);
 		        hbLeft.getChildren().add(addBook);
-		        hbLeft.getChildren().add(print);
-		        hbLeft.getChildren().add(overDueList);
 	        }
 
 	        Scene scene = new Scene(grid);
