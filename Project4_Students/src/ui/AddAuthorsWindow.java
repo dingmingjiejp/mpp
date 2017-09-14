@@ -170,7 +170,7 @@ public class AddAuthorsWindow extends Stage implements LibWindow {
         	}
         });
 
-        Button backBtn = new Button("<= Back to Add an book.");
+        Button backBtn = new Button("<= Back to Add an book");
         backBtn.setOnAction(new EventHandler<ActionEvent>() {
         	@Override
         	public void handle(ActionEvent e) {
@@ -214,6 +214,7 @@ public class AddAuthorsWindow extends Stage implements LibWindow {
     	stateTextField.setText("");
     	zipTextField.setText("");
     	authors.clear();
+    	messageBar.setText("");
     }
 
 }
