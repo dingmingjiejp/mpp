@@ -59,7 +59,7 @@ public class AddAuthorsWindow extends Stage implements LibWindow {
         grid.setPadding(new Insets(25, 25, 25, 25));
         grid.getStyleClass().add(getClass().getSimpleName());
 
-        Text scenetitle = WindowUtils.createSceneText("Add an author");
+        Text scenetitle = WindowUtils.createSceneText("Add a new author");
         grid.add(scenetitle, 0, 0, 2, 1);
 
         Label lblFirstName = new Label("FirstName:");

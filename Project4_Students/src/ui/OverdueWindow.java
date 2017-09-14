@@ -60,8 +60,7 @@ public class OverdueWindow extends Stage implements LibWindow{
 	        GridPane gridSearch = new GridPane();
 	        gridSearch.setHgap(10);
 
-	        tbv = new TableView<>();
-	        initOverdueListView(tbv);
+	        tbv = WindowUtils.initOverdueListView();
 
 	        Text scenetitle = WindowUtils.createSceneText("Overdue");
 	        grid.add(scenetitle, 0, 0, 2, 1);
@@ -126,98 +125,6 @@ public class OverdueWindow extends Stage implements LibWindow{
 	        	tbv.getItems().add(v);
 	        });
 		}
-	}
-
-
-	private void initOverdueListView(TableView<Overdue> table) {
-        // Add extra columns if necessary:
-        TableColumn<Overdue, String> colIsbn = new TableColumn<>("ISBN");
-        colIsbn.setMinWidth(30);
-        colIsbn.setCellValueFactory(data -> {
-        	Overdue rowValue = data.getValue();
-            String cellValue = rowValue.getEntry().getBookCopy().getBook().getIsbn();
-            return new ReadOnlyStringWrapper(cellValue);
-        });
-        table.getColumns().add(colIsbn);
-
-        TableColumn<Overdue, String> colTitle = new TableColumn<>("Title");
-        colTitle.setMinWidth(50);
-        colTitle.setCellValueFactory(data -> {
-        	Overdue rowValue = data.getValue();
-            String cellValue = rowValue.getEntry().getBookCopy().getBook().getTitle();
-            return new ReadOnlyStringWrapper(cellValue);
-        });
-        table.getColumns().add(colTitle);
-
-        TableColumn<Overdue, String> colCopyNum = new TableColumn<>("Copy Num");
-        colCopyNum.setMinWidth(50);
-        colCopyNum.setCellValueFactory(data -> {
-        	Overdue rowValue = data.getValue();
-            String cellValue = "" + rowValue.getEntry().getBookCopy().getCopyNum();
-            return new ReadOnlyStringWrapper(cellValue);
-        });
-        table.getColumns().add(colCopyNum);
-
-        TableColumn<Overdue, String> colStatus = new TableColumn<>("Status");
-        colStatus.setMinWidth(50);
-        colStatus.setCellValueFactory(data -> {
-        	Overdue rowValue = data.getValue();
-            String cellValue = (rowValue.getEntry().getBookCopy().isAvailable() ? "Available" : "Out");
-            return new ReadOnlyStringWrapper(cellValue);
-        });
-        table.getColumns().add(colStatus);
-
-        TableColumn<Overdue, String> colMemberId = new TableColumn<>("Member ID");
-        colMemberId.setMinWidth(50);
-        colMemberId.setCellValueFactory(data -> {
-        	Overdue rowValue = data.getValue();
-            String cellValue = rowValue.displayMemberId();
-            return new ReadOnlyStringWrapper(cellValue);
-        });
-        table.getColumns().add(colMemberId);
-
-        TableColumn<Overdue, String> colDueDate = new TableColumn<>("Due date");
-        colDueDate.setMinWidth(50);
-        colDueDate.setCellValueFactory(data -> {
-        	Overdue rowValue = data.getValue();
-            String cellValue = rowValue.displayDueDate();
-            return new ReadOnlyStringWrapper(cellValue);
-        });
-        colDueDate.setCellFactory(new Callback<TableColumn<Overdue, String>, TableCell<Overdue, String>>() {
-            public TableCell<Overdue, String> call(TableColumn<Overdue, String> param) {
-                return new TableCell<Overdue, String>() {
-                    @Override
-                    public void updateItem(String item, boolean empty) {
-                        super.updateItem(item, empty);
-                        if (empty || item == null) {
-                            setText(null);
-                            setTextFill(null);
-                            return;
-                        } else if (!item.isEmpty()) {
-                        	if(LocalDate.now().isAfter(LocalDate.parse(item, DateTimeFormatter.ofPattern("d/MM/uuuu")))) {
-                        		this.setTextFill(Color.RED);
-                        	} else {
-                        		this.setTextFill(Color.GREEN);
-                        	}
-                        }
-                        setText(item);
-                    }
-                };
-            }
-        });
-        table.getColumns().add(colDueDate);
-
-        TableColumn<Overdue, String> colDueDays = new TableColumn<>("Due days");
-        colDueDays.setMinWidth(50);
-        colDueDays.setCellValueFactory(data -> {
-        	Overdue rowValue = data.getValue();
-            String cellValue = rowValue.displayDueDays();
-            return new ReadOnlyStringWrapper(cellValue);
-        });
-        table.getColumns().add(colDueDays);
-
-        table.setPrefSize(600, 400);
-        table.setColumnResizePolicy((param) -> true );
 	}
 
 	@Override
