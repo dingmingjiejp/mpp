@@ -165,7 +165,7 @@ public class Start extends Application {
 		topContainer.setId("top-container");
 		MenuBar mainMenu = new MenuBar();
 		VBox imageHolder = new VBox();
-		Image image = new Image("ui/library.jpg", 400, 300, false, false);
+		Image image = new Image("ui/library.jpg", 600, 300, false, false);
 
         // simply displays in ImageView the image as is
         ImageView iv = new ImageView();
@@ -239,7 +239,7 @@ public class Start extends Application {
 		optionsMenu.getItems().addAll(login, bookIds, memberIds);
 
 		mainMenu.getMenus().addAll(optionsMenu);
-		Scene scene = new Scene(topContainer, 420, 375);
+		Scene scene = new Scene(topContainer, 600, 370);
 		primaryStage.setScene(scene);
 		scene.getStylesheets().add(getClass().getResource("library.css").toExternalForm());
 		primaryStage.show();

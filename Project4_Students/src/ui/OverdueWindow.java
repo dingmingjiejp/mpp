@@ -31,6 +31,7 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+import ui.utils.WindowUtils;
 
 public class OverdueWindow extends Stage implements LibWindow{
 
@@ -62,9 +63,7 @@ public class OverdueWindow extends Stage implements LibWindow{
 	        tbv = new TableView<>();
 	        initOverdueListView(tbv);
 
-	        Text scenetitle = new Text("Overdue");
-	        scenetitle.setFont(Font.font("Harlow Solid Italic", FontWeight.NORMAL, 20)); //Tahoma
-
+	        Text scenetitle = WindowUtils.createSceneText("Overdue");
 	        grid.add(scenetitle, 0, 0, 2, 1);
 	        grid.add(gridSearch, 0, 1, 2, 1);
 	        grid.add(tbv, 0, 2, 2, 1);

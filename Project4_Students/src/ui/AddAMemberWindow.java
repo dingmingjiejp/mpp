@@ -77,6 +77,7 @@ public class AddAMemberWindow extends Stage implements LibWindow{
 	        grid.add(hbBottom, 0, 2, 2, 1);
 
 	        Scene scene = new Scene(grid, 725, 595);
+	        scene.getStylesheets().add(getClass().getResource("library.css").toExternalForm());
 	        setScene(scene);
 	        setResizable(false);
 	        sizeToScene();
@@ -272,7 +273,7 @@ public class AddAMemberWindow extends Stage implements LibWindow{
         colAddress.getColumns().addAll(colStreet, colCity, colState, colZip);
         table.getColumns().add(colAddress);
 
-        table.setPrefSize(450, 450);
+        table.setPrefSize(450, 440);
         table.setColumnResizePolicy((param) -> true );
 	}
 
