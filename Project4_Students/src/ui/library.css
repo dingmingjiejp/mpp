@@ -21,6 +21,7 @@
 -fx-font-family: "Harlow Solid Italic";
 -fx-font-size:30;
 -fx-fill: white;
+-fx-font-weight:bold;
 }
 
 .selectTitle {
