@@ -39,6 +39,7 @@ public class PrintWindow extends Stage implements LibWindow{
 	        grid.setHgap(20);
 	        grid.setVgap(10);
 	        grid.setPadding(new Insets(25, 25, 25, 25));
+
 			ColumnConstraints col1 = new ColumnConstraints();
 			col1.setPercentWidth(15);
 			ColumnConstraints col2 = new ColumnConstraints();
@@ -103,6 +104,7 @@ public class PrintWindow extends Stage implements LibWindow{
 
 	        //Scene scene = new Scene(grid, 300, 200);
 	        Scene scene = new Scene(grid);
+	        scene.getStylesheets().add(getClass().getResource("library.css").toExternalForm());
 	        setScene(scene);
 
 	        this.isInitialized = true;

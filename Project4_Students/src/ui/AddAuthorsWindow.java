@@ -50,14 +50,14 @@ public class AddAuthorsWindow extends Stage implements LibWindow {
 		messageBar.setText("");
 	}
     private AddAuthorsWindow () {}
-    public void init() {
 
+    public void init() {
         GridPane grid = new GridPane();
-        grid.setId("top-container");
         grid.setAlignment(Pos.CENTER);
         grid.setHgap(10);
         grid.setVgap(10);
         grid.setPadding(new Insets(25, 25, 25, 25));
+        grid.getStyleClass().add(getClass().getSimpleName());
 
         Text scenetitle = WindowUtils.createSceneText("Add an author");
         grid.add(scenetitle, 0, 0, 2, 1);

@@ -13,8 +13,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import ui.utils.WindowUtils;
@@ -39,6 +37,7 @@ public class OperationWindow extends  Stage implements LibWindow{
 	        grid.setHgap(20);
 	        grid.setVgap(20);
 	        grid.setPadding(new Insets(25, 25, 25, 25));
+	        grid.getStyleClass().add(getClass().getSimpleName());
 
 	        VBox hbLeft = new VBox(10);
 	        VBox hbRight = new VBox();
@@ -46,10 +45,7 @@ public class OperationWindow extends  Stage implements LibWindow{
 
 	        this.tbv = WindowUtils.createBookListTableView();
 	        hbRight.getChildren().add(this.tbv);
-
-
-	        Text sceneTitle = new Text("Dear " + ControllerFactory.of().getCurrentUser().getId() +  ", Welcome to library system.");
-			sceneTitle.setFont(Font.font("Harlow Solid Italic", FontWeight.NORMAL, 20));
+	        Text sceneTitle = WindowUtils.createSceneText("Dear " + ControllerFactory.of().getCurrentUser().getId() +  ", Welcome to library system.");
 
 	        grid.add(sceneTitle, 0, 0, 2, 1);
 	        grid.add(hbLeft, 0, 1);
@@ -111,8 +107,8 @@ public class OperationWindow extends  Stage implements LibWindow{
 		        hbLeft.getChildren().add(overDueList);
 	        }
 
-	        //Scene scene = new Scene(grid, 300, 200);
 	        Scene scene = new Scene(grid);
+	        scene.getStylesheets().add(getClass().getResource("library.css").toExternalForm());
 	        setScene(scene);
 
 	        Button logout = new Button("Logout");
