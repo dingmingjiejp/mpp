@@ -13,7 +13,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import ui.utils.WindowUtils;
 
@@ -39,6 +38,7 @@ public class PrintWindow extends Stage implements LibWindow{
 	        grid.setHgap(20);
 	        grid.setVgap(10);
 	        grid.setPadding(new Insets(25, 25, 25, 25));
+
 			ColumnConstraints col1 = new ColumnConstraints();
 			col1.setPercentWidth(15);
 			ColumnConstraints col2 = new ColumnConstraints();
@@ -60,7 +60,7 @@ public class PrintWindow extends Stage implements LibWindow{
 			grid.add(this.tbv, 0, 3, 4, 4);
 
 			HBox bBox = new HBox();
-			grid.add(bBox, 2, 2, 2, 1);
+			grid.add(bBox, 2, 1, 2, 1);
 
 			Button checkBtn = new Button("Search Checkout Record");
 			checkBtn.setOnAction(e -> {
@@ -83,13 +83,18 @@ public class PrintWindow extends Stage implements LibWindow{
 					outputErrorMessage("please select a check out record.");
 				} else {
 					ControllerFactory.of().printCheckOutRecord(member, entry);
+					outputSuccessMessage("The check out record has been outputted to console.");
 				}
 			});
-
 			bBox.setAlignment(Pos.CENTER_RIGHT);
 			bBox.getChildren().add(checkBtn);
-			bBox.getChildren().add(printBtn);
 			bBox.setSpacing(20);
+
+			HBox pBox = new HBox();
+			pBox.setAlignment(Pos.CENTER_RIGHT);
+			pBox.getChildren().add(printBtn);
+			grid.add(pBox, 2, 7, 2, 1);
+
 
 			Button backBtn = new Button("< Back");
 			backBtn.setMinSize(150, 20);
@@ -103,6 +108,7 @@ public class PrintWindow extends Stage implements LibWindow{
 
 	        //Scene scene = new Scene(grid, 300, 200);
 	        Scene scene = new Scene(grid);
+	        scene.getStylesheets().add(getClass().getResource("library.css").toExternalForm());
 	        setScene(scene);
 
 	        this.isInitialized = true;
@@ -134,7 +140,12 @@ public class PrintWindow extends Stage implements LibWindow{
 	}
 
 	private void outputErrorMessage(String text) {
-		errorMessage.setTextFill(Color.web("#FF0000"));
+		errorMessage.setTextFill(Start.Colors.red);
+		errorMessage.setText(text);
+	}
+
+	private void outputSuccessMessage(String text) {
+		errorMessage.setTextFill(Start.Colors.green);
 		errorMessage.setText(text);
 	}
 

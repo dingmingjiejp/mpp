@@ -46,11 +46,11 @@ public class AddBookWindow extends Stage implements LibWindow {
     public void init() {
 
         GridPane grid = new GridPane();
-        grid.setId("top-container");
         grid.setAlignment(Pos.CENTER);
         grid.setHgap(10);
         grid.setVgap(10);
         grid.setPadding(new Insets(25, 25, 25, 25));
+        grid.getStyleClass().add(getClass().getSimpleName());
 
         Text scenetitle = WindowUtils.createSceneText("Add Book");
         grid.add(scenetitle, 0, 0, 2, 1);
@@ -132,6 +132,7 @@ public class AddBookWindow extends Stage implements LibWindow {
         hBack.setAlignment(Pos.BOTTOM_LEFT);
         hBack.getChildren().add(backBtn);
         grid.add(hBack, 0, 8);
+
         Scene scene = new Scene(grid);
         scene.getStylesheets().add(getClass().getResource("library.css").toExternalForm());
         setScene(scene);
@@ -151,7 +152,6 @@ public class AddBookWindow extends Stage implements LibWindow {
     public void setAuthorList(List<Author> authors) {
     	this.authorList.clear();
     	this.authorList.addAll(authors);
-
     	String d = "";
     	for(Author a : authors) {
     		String t = a.getFirstName() + " " + a.getLastName();

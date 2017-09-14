@@ -17,6 +17,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import ui.utils.WindowUtils;
 
 public class LoginWindow extends Stage implements LibWindow {
 	public static final LoginWindow INSTANCE = new LoginWindow();
@@ -37,14 +38,15 @@ public class LoginWindow extends Stage implements LibWindow {
     public void init() {
 
         GridPane grid = new GridPane();
-        grid.setId("top-container");
+        grid.getStyleClass().add(getClass().getSimpleName());
         grid.setAlignment(Pos.CENTER);
         grid.setHgap(10);
         grid.setVgap(10);
         grid.setPadding(new Insets(25, 25, 25, 25));
 
-        Text scenetitle = new Text("Login");
-        scenetitle.setFont(Font.font("Harlow Solid Italic", FontWeight.NORMAL, 20)); //Tahoma
+//        Text scenetitle = new Text("Login");
+//        scenetitle.setFont(Font.font("Harlow Solid Italic", FontWeight.NORMAL, 20)); //Tahoma
+        Text scenetitle = WindowUtils.createSceneText("Login");
         grid.add(scenetitle, 0, 0, 2, 1);
 
         Label userName = new Label("User Name:");
@@ -86,7 +88,6 @@ public class LoginWindow extends Stage implements LibWindow {
         			messageBar.setFill(Start.Colors.red);
         			messageBar.setText("Error! " + ex.getMessage());
         		}
-
         	}
         });
 

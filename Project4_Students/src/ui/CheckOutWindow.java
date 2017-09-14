@@ -14,7 +14,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import ui.utils.WindowUtils;
 
@@ -41,7 +40,8 @@ public class CheckOutWindow extends Stage implements LibWindow{
 	        grid.setHgap(20);
 	        grid.setVgap(10);
 	        grid.setPadding(new Insets(25, 25, 25, 25));
-			ColumnConstraints col1 = new ColumnConstraints();
+
+	        ColumnConstraints col1 = new ColumnConstraints();
 			col1.setPercentWidth(15);
 			ColumnConstraints col2 = new ColumnConstraints();
 			col2.setPercentWidth(35);
@@ -49,8 +49,10 @@ public class CheckOutWindow extends Stage implements LibWindow{
 			col3.setPercentWidth(15);
 			ColumnConstraints col4 = new ColumnConstraints();
 			col4.setPercentWidth(35);
+
 			grid.getColumnConstraints().addAll(col1,col2,col3,col4);
 			grid.setPrefSize(700,500);
+	        grid.getStyleClass().add(getClass().getSimpleName());
 
 	        this.tbv = WindowUtils.createCheckOutRecordEntryListTableView();
 			Label lbMemberId = new Label("Member ID:");
@@ -100,7 +102,6 @@ public class CheckOutWindow extends Stage implements LibWindow{
 				}
 			});
 
-
 			bBox.setAlignment(Pos.CENTER_RIGHT);
 			bBox.getChildren().add(checkBtn);
 			bBox.getChildren().add(checkOutBtn);
@@ -118,6 +119,7 @@ public class CheckOutWindow extends Stage implements LibWindow{
 
 	        //Scene scene = new Scene(grid, 300, 200);
 	        Scene scene = new Scene(grid);
+	        scene.getStylesheets().add(getClass().getResource("library.css").toExternalForm());
 	        setScene(scene);
 
 	        this.isInitialized = true;
@@ -149,12 +151,12 @@ public class CheckOutWindow extends Stage implements LibWindow{
 	}
 
 	private void outputErrorMessage(String text) {
-		errorMessage.setTextFill(Color.web("#FF0000"));
+		errorMessage.setTextFill(Start.Colors.red);
 		errorMessage.setText(text);
 	}
 
 	private void outputSuccessMessage(String text) {
-		errorMessage.setTextFill(Color.web("#18A851"));
+		errorMessage.setTextFill(Start.Colors.green);
 		errorMessage.setText(text);
 	}
 }

@@ -6,7 +6,6 @@ import business.ControllerFactory;
 import business.ControllerInterface;
 import business.LibraryMember;
 import business.ValidationException;
-import dataaccess.User;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -21,17 +20,15 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import ui.utils.WindowUtils;
 
 public class AddAMemberWindow extends Stage implements LibWindow{
 
 	public static final AddAMemberWindow INSTANCE = new AddAMemberWindow();
 
 	private boolean isInitialized = false;
-	private User user;
 	private HashMap<String,LibraryMember> membersMap;
 	private TableView<LibraryMember> tbv;
 	private TextField txtMemberId;
@@ -46,8 +43,7 @@ public class AddAMemberWindow extends Stage implements LibWindow{
 	public AddAMemberWindow() {
 	}
 
-	public void setData(User user, HashMap<String,LibraryMember> membersMap) {
-		this.user = user;
+	public void setData(HashMap<String,LibraryMember> membersMap) {
 		this.membersMap = membersMap;
 	}
 
@@ -59,6 +55,7 @@ public class AddAMemberWindow extends Stage implements LibWindow{
 	        grid.setHgap(20);
 	        grid.setVgap(20);
 	        grid.setPadding(new Insets(25, 25, 25, 25));
+	        grid.getStyleClass().add(getClass().getSimpleName());
 
 	        VBox hbBottom = new VBox(10);
 	        VBox hbLeft = new VBox(10);
@@ -68,8 +65,7 @@ public class AddAMemberWindow extends Stage implements LibWindow{
 	        tbv = new TableView<>();
 	        initMemberListView(tbv);
 
-	        Text scenetitle = new Text("Add a New Library Member");
-	        scenetitle.setFont(Font.font("Harlow Solid Italic", FontWeight.NORMAL, 20)); //Tahoma
+	        Text scenetitle = WindowUtils.createSceneText("Add a New Library Member");
 
 	        GridPane gridMember = new GridPane();
 	        gridMember.setHgap(10);
@@ -81,9 +77,10 @@ public class AddAMemberWindow extends Stage implements LibWindow{
 	        grid.add(hbBottom, 0, 2, 2, 1);
 
 	        Scene scene = new Scene(grid, 725, 595);
+	        scene.getStylesheets().add(getClass().getResource("library.css").toExternalForm());
 	        setScene(scene);
-	        this.INSTANCE.setResizable(false);
-	        this.INSTANCE.sizeToScene();
+	        setResizable(false);
+	        sizeToScene();
 
 	        initMemberGrid(gridMember);
 
@@ -214,7 +211,7 @@ public class AddAMemberWindow extends Stage implements LibWindow{
         table.getColumns().add(colmemberId);
 
         TableColumn<LibraryMember, String> colFirstname = new TableColumn<>("First name");
-        colFirstname.setMinWidth(50);
+        colFirstname.setMinWidth(80);
         colFirstname.setCellValueFactory(data -> {
         	LibraryMember rowValue = data.getValue();
             String cellValue = rowValue.getFirstName();
@@ -223,7 +220,7 @@ public class AddAMemberWindow extends Stage implements LibWindow{
         table.getColumns().add(colFirstname);
 
         TableColumn<LibraryMember, String> colLastname = new TableColumn<>("Last name");
-        colLastname.setMinWidth(50);
+        colLastname.setMinWidth(80);
         colLastname.setCellValueFactory(data -> {
         	LibraryMember rowValue = data.getValue();
             String cellValue = rowValue.getFirstName();
@@ -276,7 +273,7 @@ public class AddAMemberWindow extends Stage implements LibWindow{
         colAddress.getColumns().addAll(colStreet, colCity, colState, colZip);
         table.getColumns().add(colAddress);
 
-        table.setPrefSize(450, 450);
+        table.setPrefSize(450, 440);
         table.setColumnResizePolicy((param) -> true );
 	}
 

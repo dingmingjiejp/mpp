@@ -34,7 +34,7 @@ public class Start extends Application {
 	}
 
 	public static class Colors {
-		static Color green = Color.web("#034220");
+		static Color green = Color.web("#18A851");
 		static Color red = Color.FIREBRICK;
 	}
 
@@ -81,8 +81,7 @@ public class Start extends Application {
 		hideAllWindows();
 		ControllerInterface controller = ControllerFactory.of();
 		if(!AddACopyWindow.INSTANCE.isInitialized()) {
-			AddACopyWindow.INSTANCE.setData(controller.getCurrentUser(),
-					controller.getBooksMap());
+			AddACopyWindow.INSTANCE.setData(controller.getBooksMap());
 			AddACopyWindow.INSTANCE.init();
 		}
 		AddACopyWindow.INSTANCE.refreshBookList();;
@@ -140,8 +139,7 @@ public class Start extends Application {
 		hideAllWindows();
 		ControllerInterface controller = ControllerFactory.of();
 		if(!AddAMemberWindow.INSTANCE.isInitialized()) {
-			AddAMemberWindow.INSTANCE.setData(controller.getCurrentUser(),
-					controller.getMembersMap());
+			AddAMemberWindow.INSTANCE.setData(controller.getMembersMap());
 			AddAMemberWindow.INSTANCE.init();
 		}
 		AddAMemberWindow.INSTANCE.refreshMemberList();;
@@ -167,7 +165,7 @@ public class Start extends Application {
 		topContainer.setId("top-container");
 		MenuBar mainMenu = new MenuBar();
 		VBox imageHolder = new VBox();
-		Image image = new Image("ui/library.jpg", 400, 300, false, false);
+		Image image = new Image("ui/library.jpg", 600, 300, false, false);
 
         // simply displays in ImageView the image as is
         ImageView iv = new ImageView();
@@ -241,7 +239,7 @@ public class Start extends Application {
 		optionsMenu.getItems().addAll(login, bookIds, memberIds);
 
 		mainMenu.getMenus().addAll(optionsMenu);
-		Scene scene = new Scene(topContainer, 420, 375);
+		Scene scene = new Scene(topContainer, 600, 370);
 		primaryStage.setScene(scene);
 		scene.getStylesheets().add(getClass().getResource("library.css").toExternalForm());
 		primaryStage.show();

@@ -9,7 +9,6 @@ import business.Book;
 import business.BookCopy;
 import business.ControllerFactory;
 import business.ControllerInterface;
-import dataaccess.User;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -26,17 +25,15 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import ui.utils.WindowUtils;
 
 public class AddACopyWindow extends Stage implements LibWindow{
 
 	public static final AddACopyWindow INSTANCE = new AddACopyWindow();
 
 	private boolean isInitialized = false;
-	private User user;
 	private HashMap<String,Book> booksMap;
 	private TableView<Book> tbv;
 	private TextField txtIsbn;
@@ -44,8 +41,7 @@ public class AddACopyWindow extends Stage implements LibWindow{
 	public AddACopyWindow() {
 	}
 
-	public void setData(User user, HashMap<String,Book> booksMap) {
-		this.user = user;
+	public void setData(HashMap<String,Book> booksMap) {
 		this.booksMap = booksMap;
 	}
 
@@ -57,6 +53,7 @@ public class AddACopyWindow extends Stage implements LibWindow{
 	        grid.setHgap(20);
 	        grid.setVgap(20);
 	        grid.setPadding(new Insets(25, 25, 25, 25));
+	        grid.getStyleClass().add(getClass().getSimpleName());
 
 	        VBox hbLeft = new VBox(10);
 	        VBox hbRight = new VBox();
@@ -68,14 +65,9 @@ public class AddACopyWindow extends Stage implements LibWindow{
 	        hbRight.getChildren().add(tbv);
 	        initBookListView(tbv);
 
-	        Text scenetitle = new Text("Add a Book Copy");
-	        scenetitle.setFont(Font.font("Harlow Solid Italic", FontWeight.NORMAL, 20)); //Tahoma
-
-	        Text selecttitle = new Text("Select the book");
-	        selecttitle.setFont(Font.font("Harlow Solid Italic", FontWeight.BOLD, 12));
-
-	        Text lefttitle = new Text("Search a book");
-	        lefttitle.setFont(Font.font("Harlow Solid Italic", FontWeight.BOLD, 12));
+	        Text scenetitle = WindowUtils.createSceneText("Add a Book Copy");
+	        Text selecttitle = WindowUtils.createSceneText("Select the book", "selectTitle");
+	        Text lefttitle = WindowUtils.createSceneText("Search a book", "leftTitle");
 
 	        grid.add(scenetitle, 0, 0, 2, 1);
 	        grid.add(lefttitle, 0, 1);
@@ -84,12 +76,11 @@ public class AddACopyWindow extends Stage implements LibWindow{
 	        grid.add(hbRight, 1, 2);
 	        grid.add(hbBottom, 0, 3, 2, 1);
 
-
 	        Scene scene = new Scene(grid, 725, 595);
-//	        Scene scene = new Scene(grid);
+			scene.getStylesheets().add(getClass().getResource("library.css").toExternalForm());
 	        setScene(scene);
-	        this.INSTANCE.setResizable(false);
-	        this.INSTANCE.sizeToScene();
+	        setResizable(false);
+	        sizeToScene();
 
 	        GridPane gridIsbn = new GridPane();
 	        gridIsbn.setHgap(10);
@@ -111,7 +102,7 @@ public class AddACopyWindow extends Stage implements LibWindow{
 	        });
 			gridSearchBtn.add(searchBtn, 0, 0);
 
-			Button clearBtn = new Button("Clear search");
+			Button clearBtn = new Button("Clear");
 			clearBtn.setOnAction(new EventHandler<ActionEvent>() {
 	        	@Override
 	        	public void handle(ActionEvent e) {
@@ -240,7 +231,6 @@ public class AddACopyWindow extends Stage implements LibWindow{
 	public static String getAuthorName(Author author) {
 		return author.getFirstName() + " " + author.getLastName();
 	}
-
 
 	@Override
 	public boolean isInitialized() {
