@@ -14,7 +14,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import ui.utils.WindowUtils;
 
@@ -152,12 +151,12 @@ public class CheckOutWindow extends Stage implements LibWindow{
 	}
 
 	private void outputErrorMessage(String text) {
-		errorMessage.setTextFill(Color.web("#FF0000"));
+		errorMessage.setTextFill(Start.Colors.red);
 		errorMessage.setText(text);
 	}
 
 	private void outputSuccessMessage(String text) {
-		errorMessage.setTextFill(Color.web("#18A851"));
+		errorMessage.setTextFill(Start.Colors.green);
 		errorMessage.setText(text);
 	}
 }

@@ -34,7 +34,7 @@ public class Start extends Application {
 	}
 
 	public static class Colors {
-		static Color green = Color.web("#034220");
+		static Color green = Color.web("#18A851");
 		static Color red = Color.FIREBRICK;
 	}
 
