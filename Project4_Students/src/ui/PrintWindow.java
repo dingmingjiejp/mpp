@@ -60,7 +60,7 @@ public class PrintWindow extends Stage implements LibWindow{
 			grid.add(this.tbv, 0, 3, 4, 4);
 
 			HBox bBox = new HBox();
-			grid.add(bBox, 2, 2, 2, 1);
+			grid.add(bBox, 2, 1, 2, 1);
 
 			Button checkBtn = new Button("Search Checkout Record");
 			checkBtn.setOnAction(e -> {
@@ -86,11 +86,15 @@ public class PrintWindow extends Stage implements LibWindow{
 					outputSuccessMessage("The check out record has been outputted to console.");
 				}
 			});
-
 			bBox.setAlignment(Pos.CENTER_RIGHT);
 			bBox.getChildren().add(checkBtn);
-			bBox.getChildren().add(printBtn);
 			bBox.setSpacing(20);
+
+			HBox pBox = new HBox();
+			pBox.setAlignment(Pos.CENTER_RIGHT);
+			pBox.getChildren().add(printBtn);
+			grid.add(pBox, 2, 7, 2, 1);
+
 
 			Button backBtn = new Button("< Back");
 			backBtn.setMinSize(150, 20);
