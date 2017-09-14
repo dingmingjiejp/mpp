@@ -93,7 +93,7 @@ public class PrintWindow extends Stage implements LibWindow{
 			HBox pBox = new HBox();
 			pBox.setAlignment(Pos.CENTER_RIGHT);
 			pBox.getChildren().add(printBtn);
-			grid.add(pBox, 3, 7, 2, 1);
+			grid.add(pBox, 2, 7, 2, 1);
 
 
 			Button backBtn = new Button("< Back");
