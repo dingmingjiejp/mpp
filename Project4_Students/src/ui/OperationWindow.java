@@ -101,12 +101,12 @@ public class OperationWindow extends Stage implements LibWindow {
 			hbLeft.getChildren().add(addMemeber);
 			hbLeft.getChildren().add(addBook);
 
-			if (Auth.BOTH.equals(user.getAuthorization()) || Auth.LIBRARIAN.equals(user.getAuthorization())) {
+			if (Auth.LIBRARIAN.equals(user.getAuthorization())) {
 				addBookCopy.setDisable(true);
 				addMemeber.setDisable(true);
 				addBook.setDisable(true);
 
-			} else if (Auth.BOTH.equals(user.getAuthorization()) || Auth.ADMIN.equals(user.getAuthorization())) {
+			} else if (Auth.ADMIN.equals(user.getAuthorization())) {
 				checkOutIn.setDisable(true);
 				print.setDisable(true);
 				overDueList.setDisable(true);
