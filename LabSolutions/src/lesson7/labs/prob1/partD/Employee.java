@@ -36,7 +36,7 @@ public class Employee {
 		if(ob == null) return false;
 		if(!(ob instanceof Employee)) return false;
 		Employee emp = (Employee)ob;
-		return emp.name.equals(name) && emp.salary == salary && emp.visited == visited;
+		return emp.name.equals(name) && emp.salary == salary;// && emp.visited == visited;
 	}
 	
 	@Override
@@ -46,7 +46,7 @@ public class Employee {
 		int salaryHash = (int) (longval ^ (longval >>> 32));
 		result += 31 * result + name.hashCode();
 		result += 31 * result + salaryHash;
-		result += 31 * result + (visited ? 1 : 0);
+//		result += 31 * result + (visited ? 1 : 0);
 		return result;
 	}
 }

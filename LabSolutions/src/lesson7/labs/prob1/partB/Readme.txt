@@ -1,6 +1,8 @@
 It does not work correctly because in Employee class, 
-it was not overridden equals method of Object correctly.
-
+it was not overridden Object's equals method correctly.
+It checks whether the lists are equal by using contains method of List.
+List's contains method compares the pointer of the objects. 
+So we need to override equals to compare it correctly.
 
 previous version was =>
 
@@ -11,7 +13,7 @@ previous version was =>
 	
 	
 corrected version is =>
-Add override to check properly overriding and change parameter class as Object.
+Overriding the Object's equal method by changing the parameter class as Object.
 
 	@Override
 	public boolean equals(Object e) {
