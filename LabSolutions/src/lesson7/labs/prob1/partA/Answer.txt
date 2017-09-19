@@ -1,4 +1,4 @@
-A.	Java’s ArrayList implements 6 interfaces and extends one class:
+A.	Java ArrayList implements 6 interfaces and extends one class:
 
 It implements
  -	Serializable

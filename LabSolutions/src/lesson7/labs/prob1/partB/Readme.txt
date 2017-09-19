@@ -17,6 +17,8 @@ Overriding the Object's equal method by changing the parameter class as Object.
 
 	@Override
 	public boolean equals(Object e) {
+		if (e==null)
+			return false;
 		if(!(e instanceof Employee)) return false;
 		Employee emp = (Employee) e;
 		return emp.name.equals(name) && emp.salary == salary;
