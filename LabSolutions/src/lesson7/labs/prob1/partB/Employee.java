@@ -25,7 +25,10 @@ public class Employee {
 		return "(" + name + ", " + salary + ")";
 	}
 	
-	public boolean equals(Employee e) {
-		return e.name.equals(name) && e.salary == salary;
+	@Override
+	public boolean equals(Object e) {
+		if(!(e instanceof Employee)) return false;
+		Employee emp = (Employee) e;
+		return emp.name.equals(name) && emp.salary == salary;
 	}
 }

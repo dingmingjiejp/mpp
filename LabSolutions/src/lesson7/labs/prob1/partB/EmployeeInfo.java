@@ -81,6 +81,7 @@ public class EmployeeInfo {
 		};
 
 		List<Employee> answer = removeDuplicates(list);
+		
 		System.out.println("Is answer correct? " + listsAreEqual(answer, dupsRemoved));
 	}
 	
