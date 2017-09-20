@@ -83,8 +83,8 @@ public class Employee {
 //  	Method reference type: object::instanceMethod
 		Employee emp1=new Employee("John",1000);
 		EmployeeNameComparator comp = new EmployeeNameComparator(); 
-		TriFunction<EmployeeNameComparator,Employee,Employee,Integer> compare = EmployeeNameComparator::compare;
-		System.out.println("compare = "+ compare.apply(comp,emp,emp1));
+		BiFunction<Employee,Employee,Integer> compare = comp::compare;
+		System.out.println("compare = "+ compare.apply(emp,emp1));
 	}
 }
 
