@@ -1,5 +1,5 @@
 a. 
-Programs are declarative (¡°what¡±) rather than imperative (¡°how¡±). Makes code more self-documenting ¨C the sequence of function calls mirrors precisely the requirements.
+Programs are declarative (ï¿½ï¿½whatï¿½ï¿½) rather than imperative (ï¿½ï¿½howï¿½ï¿½). Makes code more self-documenting ï¿½C the sequence of function calls mirrors precisely the requirements.
 Functions are first-class citizens. This means in particular that it is possible to use functions in the same way objects are used in an OO language: They can be passed as arguments to other functions and can be the return value of a function.
 
 b.
@@ -58,3 +58,25 @@ public class EmployeeInfo {
 	
 	}
 }
+
+
+-----------------------------------------------------------------------------------------------------------------------
+g.
+Predicate<Object> p = this::equals;
+
+See Main_g for more details.
+
+h.
+ i. Consumer<String> c2 = (v) -> System.out.println(v);
+ ii. The method references mentioned in lecture are :
+     Consumer, BiFunction, Comparator
+     BiFunction and Comparator need 2 parameters. Only Consumer can used for System.out::println
+
+See Main_h for more details.
+
+j.
+pls see Main_j
+
+
+
+
