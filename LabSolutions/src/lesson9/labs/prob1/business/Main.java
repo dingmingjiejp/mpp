@@ -1,6 +1,7 @@
 package lesson9.labs.prob1.business;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 import lesson9.labs.prob1.dataaccess.DataAccess;
 import lesson9.labs.prob1.dataaccess.DataAccessFacade;
@@ -22,8 +23,8 @@ public class Main {
 		List<LibraryMember> mems = new ArrayList<>();
 		mems.addAll(members);
 		//implement
-		return null;
-		
+		return mems.stream().filter(r -> r.getAddress().getZip().contains("3")).map(LibraryMember::getMemberId)
+				.collect(Collectors.toList());
 	}
 	//Returns a list of all isbns of books having at least two copies
 		public static List<String> allHavingAtLeastTwoCopies() {
@@ -32,10 +33,10 @@ public class Main {
 			List<Book> bs = new ArrayList<>();
 			bs.addAll(books);
 			//implement
-			return null;
-			
+			return bs.stream().filter(r -> r.getNumCopies() >= 2).map(Book::getIsbn)
+					.collect(Collectors.toList());
 		}
-	
+
 	//Returns a list of all isbns of  Books that have multiple authors
 	public static List<String> allHavingMultipleAuthors() {
 		DataAccess da = new DataAccessFacade();
@@ -43,8 +44,9 @@ public class Main {
 		List<Book> bs = new ArrayList<>();
 		bs.addAll(books);
 		//implement
-		return null;
-		
+		return bs.stream().filter(r -> r.getAuthors().size() > 1).map(Book::getIsbn)
+				.collect(Collectors.toList());
+
 		}
 
 }
