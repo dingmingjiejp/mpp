@@ -38,6 +38,8 @@ public class Employee {
 		
 	}
 	
+	
+	// part 1 & part 2 
 	public static void evaluator() {
 		Employee emp=new Employee("John",1000);
 		
