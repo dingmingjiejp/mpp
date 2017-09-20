@@ -31,11 +31,7 @@ public class Employee {
 	{
 		name=n;
 	}
-	
-	@FunctionalInterface
-	public interface TriFunction<S,T,U,R>{
-		R apply(S s, T t, U u);
-	}
+
 	public static void main(String[] args)
 	{
 		evaluator();
