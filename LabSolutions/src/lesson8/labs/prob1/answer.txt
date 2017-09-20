@@ -1,7 +1,60 @@
-a.
-
+a. 
+Programs are declarative (¡°what¡±) rather than imperative (¡°how¡±). Makes code more self-documenting ¨C the sequence of function calls mirrors precisely the requirements.
+Functions are first-class citizens. This means in particular that it is possible to use functions in the same way objects are used in an OO language: They can be passed as arguments to other functions and can be the return value of a function.
 
 b.
+Declarative programming describes what you want to do, and not how you want to do it. 
+class DeclarativeStyle {
+    public static void main(String []args){
+        List numbers = Arrays.asList(1,2,3,4, 5, 6);
+
+        numbers.stream()                         //A Fancy Collection
+           .filter(DeclarativeStyle::isEven)     //Filter the data
+           .map(DeclarativeStyle::doubleInteger) //Map new values
+           .forEach(System.out::println);        //Iterate & perform the operation
+    }
+
+    public static String doubleInteger(Integer number){
+        return String.valueOf(number * 2);
+    }
+
+    public static Boolean isEven(Integer number){
+        return number%2==0;
+    }
+}
 
 c.
+An functional interface is an interface that it must have exactly one abstract method, not counting any methods from Object that have been re-declared.
+interface Comparator<T>
+{
+	int compare(T e1, T e2);
+}
 
+An implementation of a functional interface is called a functor.
+public class EmployeeNameComparator implements Comparator<Employee> {
+	@Override
+	public int compare(Employee e1, Employee e2) {
+		return e1.name.compareTo(e2.name);
+	}
+}
+
+A closure is a functor embedded inside another class, that is capable of remembering the state of its enclosing object.
+public class EmployeeInfo {
+	static enum SortMethod {BYNAME, BYSALARY};
+	private SortMethod sortMethod = SortMethod.BYNAME;
+	public void sort(List<Employee> emps, final SortMethod method) {
+		class EmployeeComparator implements Comparator<Employee> {
+			@Override
+			public int compare(Employee e1, Employee e2) {
+				if(method == sortMethod) {
+					return e1.name.compareTo(e2.name);
+				} else {
+					throw new IllegalArgumentException("Cannot compare");
+				}
+			}
+		}
+		Collections.sort(emps, new EmployeeComparator());
+	}
+	
+	}
+}
