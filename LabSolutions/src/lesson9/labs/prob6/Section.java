@@ -6,7 +6,7 @@ import java.util.stream.Stream;
 
 public class Section {
 	public static Stream<String> streamSection(Stream<String> stream, int m, int n) {
-		return null; //implement 
+		return stream.limit(n+1).skip(m);
 	}
 	
 	public static void main(String[] args) {
