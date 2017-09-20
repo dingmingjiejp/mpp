@@ -1,4 +1,4 @@
-package lesson8.labs.prob2.comparator2;
+package lesson8.labs.prob2.partA;
 
 import java.util.ArrayList;
 import java.util.Arrays;

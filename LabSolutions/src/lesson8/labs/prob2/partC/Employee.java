@@ -1,4 +1,4 @@
-package lesson8.labs.prob2.comparator2;
+package lesson8.labs.prob2.partC;
 
 public class Employee {
 	String name;
@@ -18,12 +18,5 @@ public class Employee {
 		return sb.toString();
 		
 	}
-//	@Override
-//	public boolean equals(Object ob) {
-//		if(ob == null) return false;
-//		if(ob.getClass() != getClass()) return false;
-//		Employee e = (Employee)ob;
-//		return e.name.equals(name) && e.salary==salary;
-//	}
 }
 
