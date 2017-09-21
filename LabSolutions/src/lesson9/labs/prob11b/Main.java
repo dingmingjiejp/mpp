@@ -1,6 +1,7 @@
 package lesson9.labs.prob11b;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
 
 
 public class Main {
@@ -15,8 +16,10 @@ public class Main {
 		                  new Employee("Thomas", "Blake", 111000),
 		                  new Employee("Alice", "Richards", 101000),
 		                  new Employee("Donald", "Trump", 100000));
-		
-		
+
+		  System.out.println(
+				  LambdaLibrary.NAMES_WITH_MINSALARY_BEGINLETTER.apply(list, 100000D, "M")
+				  );
 	}
 
 }
