@@ -9,12 +9,13 @@ public class MySingletonLazy {
 
 	private static MySingletonLazy create()
 	{
+		System.out.println("create");
 		instance=new MySingletonLazy();
 		return instance;
 	}
 	public static MySingletonLazy getInstance()
 	{
-		return Optional.ofNullable(instance).orElse(create());
+		return Optional.ofNullable(instance).orElseGet(()->create());
 	}
 
 	public static void main(String[] args) {
