@@ -1,0 +1,40 @@
+a.
+Explanation:
+
+It will output 1. Because the stream generates 1 infinitely.
+Instead of using distinct, we can use limit by one to make it simple.
+
+Solution:
+
+   public static void main(String[] args) {
+      IntStream ones = IntStream.generate(() -> 1).limit(1);
+      ones.forEach(System.out::println);
+   }
+
+------------------------------------------------------------------------------
+b. You have a Stream of Strings called stringStream consisting of the values
+“Bill”, “Thomas”, and “Mary”. Write the one line of code necessary to print
+this stream to the console so that the output looks like this: Bill, Thomas, Mary
+
+Solution:
+
+   public static void main(String[] args) {
+	   Stream<String> stringStream = Stream.of("Bill", "Thomas", "Mary");
+	   System.out.println(stringStream.collect(Collectors.joining(", ")));
+
+   }
+
+------------------------------------------------------------------------------
+c. You have a Stream of Integers called myIntStream and you need to output
+both the maximum and minimum values somehow, making use of this stream only once.
+Write compact code that efficiently accomplishes this.
+
+Solution:
+
+   public static void main(String[] args) {
+	   Stream<Integer> myIntStream = Stream.of(2, 4, 33, 8, 81, 2, 4, 6);
+	   IntSummaryStatistics summary = myIntStream.collect(Collectors.summarizingInt((i)-> i));
+	   System.out.println("Maximum value: " + summary.getMax());
+	   System.out.println("Minimum value: " + summary.getMin());
+
+   }
