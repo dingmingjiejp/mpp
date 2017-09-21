@@ -1,9 +1,8 @@
 package lesson9.labs.prob11a;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
 
 public class Main {
 
@@ -17,14 +16,18 @@ public class Main {
 		                  new Employee("Thomas", "Blake", 111000),
 		                  new Employee("Alice", "Richards", 101000),
 		                  new Employee("Donald", "Trump", 100000));
-		
-		  System.out.println(/*implement */);
-				               
-		  
+
+		  System.out.println(
+				  emps.stream().filter(r -> r.getSalary() > 100000 &&
+						  	r.getLastName().matches("^[N-Z].*"))
+				  			.map(r -> r.firstName + " " + r.lastName)
+				  			.sorted()
+				  			.collect(Collectors.joining(","))
+				  );
 
 	}
-	
-	
-	
+
+
+
 
 }
