@@ -2,6 +2,10 @@ package lesson9.labs.prob13;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Stream;
+
+import javax.xml.transform.stream.StreamSource;
 
 @SuppressWarnings("unused")
 public class Book {
@@ -21,5 +25,12 @@ public class Book {
 	public void addCopy() {
 		BookCopy copy = new BookCopy(this, copies.size() + 1, true);
 		copies.add(copy);
+	}
+	public boolean isAvailable()
+	{
+		Optional<Boolean> ret=copies.stream()
+				.map(x->x.isAvailable())
+				.reduce((x,y)->x || y ) ;
+		return ret.isPresent()?ret.get():false;
 	}
 }
