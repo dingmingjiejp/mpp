@@ -14,12 +14,20 @@ public class Main {
 		                  new Employee("Thomas", "Blake", 111000),
 		                  new Employee("Alice", "Richards", 101000),
 		                  new Employee("Donald", "Trump", 100000));
-		
+
 		//print the number of Employees in list whose salary > 100000 and whose last name begins
 		//with a letter that comes after the letter 'E'
-		
+		System.out.println(
+				"the number of Employees whose salary > 100000 and last name after E : " +
+						LambdaLibrary.EMPLOYEELIST_WITH_MINSALARY_STARTLETTER.apply(list, 100000D, "E").size());
+		System.out.println("");
+
+
 		//print a list of sorted full names - all upper case -- of Employees with
-		//salary > 85000 and whose first name begins with a letter that comes before  the letter 'R'
+		//salary > 85000 and whose first name begins with a letter that comes before the letter 'R'
+		System.out.println("full names list of salary > 85000 and first name before the letter'R'");
+		System.out.println("------------------------------------------------------------");
+		LambdaLibrary.EMPLOYEENAMELIST_WITH_MINSALARY_STARTLETTER2.apply(list, 85000D, "R").forEach(System.out::println);;
 
 	}
 
