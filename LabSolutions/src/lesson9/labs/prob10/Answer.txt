@@ -13,7 +13,7 @@ Solution:
 
 ------------------------------------------------------------------------------
 b. You have a Stream of Strings called stringStream consisting of the values
-“Bill”, “Thomas”, and “Mary”. Write the one line of code necessary to print
+"Bill", "Thomas", and "Mary". Write the one line of code necessary to print
 this stream to the console so that the output looks like this: Bill, Thomas, Mary
 
 Solution:
