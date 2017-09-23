@@ -58,18 +58,18 @@ public class BugReportGenerator {
 		//this quite a bit to solve the problem
 		//Sample code below obtains a list of names of developers assigned to bugs
 		List<String> names = new ArrayList<String>();
-		Map<String,List<BugReport>> map=new HashMap<String,List<BugReport>>();
+		Map<String,List<Class>> map=new HashMap<String,List<Class>>();
 		
 		for(Class<?> cl : classes) {
 			if(cl.isAnnotationPresent(BugReport.class)) {
 				BugReport annotation = (BugReport)cl.getAnnotation(BugReport.class);
 				String name = annotation.assignedTo();
-				List<BugReport> list=null;
+				List<Class> list=null;
 				if (!map.containsKey(name))
-					list=new ArrayList<BugReport>();
+					list=new ArrayList<Class>();
 				else
 					list=map.get(name);
-				list.add(annotation);
+				list.add(cl);
 				map.put(name, list);
 			}
 		}
@@ -80,10 +80,11 @@ public class BugReportGenerator {
 			map.forEach((name,list)->
 			{
 				wr.println(name);
-				list.forEach(bug->
+				list.forEach(cl->
 				{
+					BugReport bug = (BugReport)cl.getAnnotation(BugReport.class);
 					wr.println("\t"+REPORTED_BY+bug.reportedBy());
-					wr.println("\t"+CLASS_NAME+bug.annotationType().getSimpleName());
+					wr.println("\t"+CLASS_NAME+cl.getName());
 					wr.println("\t"+DESCRIPTION+bug.description());
 					wr.println("\t"+SEVERITY+bug.severity());
 					wr.println();
