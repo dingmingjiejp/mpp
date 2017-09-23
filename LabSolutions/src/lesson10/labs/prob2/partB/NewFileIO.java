@@ -11,33 +11,24 @@ import java.util.logging.Logger;
 
 public class NewFileIO {
 	private static final Logger LOG = Logger.getLogger(NewFileIO.class.getName());
-	public final static String FILE_LOCATION = "src/lesson10/labs/prob2/partA/output.txt";
-	private static final String FILENAME ="output.txt";
+	public final static String FILE_LOCATION = "src/lesson10/labs/prob2/partB/output.txt";
 	public final static String TO_PRINT = "This is the string to print to file.";
 
-	private URL getFileAsInputStream(String filename) {
-		URL fileAsUrl = null;
-		String pkge = asPath(getClass().getPackage().getName());
+	private String getFileExists(String path) {
 		try {
-			fileAsUrl = this.getClass().getClassLoader().getResource(pkge + "/" + filename);
-			if(fileAsUrl == null) throw new IOException();
-			InputStream is = fileAsUrl.openStream();
-		} catch(IOException e) {
-			String msg = "Unable to open file as an InputStream";
-			LOG.warning(msg);
-			throw new RuntimeException(msg);
+			if(!(new File(path).exists()))
+				throw new IOException();
+			return new File(path).getCanonicalPath();
+		} catch (IOException ex) {
+			System.out.println("GOT IOException");
+			//turns checked to unchecked
+			throw new RuntimeException(ex);
 		}
-		return fileAsUrl;
-	}
-	private String asPath(String packageName) {
-		//replace dots with '/'
-		return packageName.replace('.','/');
 	}
 
 	void writeText(String filename, String text) {
-		URL fileAsUrl = getFileAsInputStream(filename);
-		System.out.println(fileAsUrl.getFile());
-		try(PrintWriter writer = new PrintWriter(fileAsUrl.getFile())) {
+		String path = getFileExists(filename);
+		try(PrintWriter writer = new PrintWriter(new FileWriter(new File(path)))) {
 			writer.print(text);
 		} catch(IOException e) {
 			LOG.warning("IOException attempting to write a file: " + e.getMessage());
@@ -50,7 +41,7 @@ public class NewFileIO {
 
 	public static void main(String[] args) {
 		NewFileIO newFileIO = new NewFileIO();
-		newFileIO.writeText(FILENAME, TO_PRINT);
+		newFileIO.writeText(FILE_LOCATION, TO_PRINT);
 
 	}
 
