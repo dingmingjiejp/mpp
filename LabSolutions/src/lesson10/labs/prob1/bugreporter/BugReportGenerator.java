@@ -1,13 +1,15 @@
 package lesson10.labs.prob1.bugreporter;
 
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.Writer;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
+import java.util.Map;
 import java.util.logging.Logger;
 
 import lesson10.labs.prob1.classfinder.ClassFinder;
@@ -56,14 +58,44 @@ public class BugReportGenerator {
 		//this quite a bit to solve the problem
 		//Sample code below obtains a list of names of developers assigned to bugs
 		List<String> names = new ArrayList<String>();
+		Map<String,List<BugReport>> map=new HashMap<String,List<BugReport>>();
+		
 		for(Class<?> cl : classes) {
 			if(cl.isAnnotationPresent(BugReport.class)) {
 				BugReport annotation = (BugReport)cl.getAnnotation(BugReport.class);
 				String name = annotation.assignedTo();
-				names.add(name);
+				List<BugReport> list=null;
+				if (!map.containsKey(name))
+					list=new ArrayList<BugReport>();
+				else
+					list=map.get(name);
+				list.add(annotation);
+				map.put(name, list);
 			}
 		}
-		System.out.println(names);
+		String path=System.getProperty("user.dir")+"\\"+REPORT_NAME;
+		System.out.println(path);
+		try (PrintWriter wr=new PrintWriter(new FileWriter(new File(path))))
+		{
+			map.forEach((name,list)->
+			{
+				wr.println(name);
+				list.forEach(bug->
+				{
+					wr.println("\t"+REPORTED_BY+bug.reportedBy());
+					wr.println("\t"+CLASS_NAME+bug.annotationType().getSimpleName());
+					wr.println("\t"+DESCRIPTION+bug.description());
+					wr.println("\t"+SEVERITY+bug.severity());
+					wr.println();
+				});
+				
+			});
+		}
+		catch (Exception ex)
+		{
+			ex.printStackTrace();
+		}
+		
 		
 	}
 	
