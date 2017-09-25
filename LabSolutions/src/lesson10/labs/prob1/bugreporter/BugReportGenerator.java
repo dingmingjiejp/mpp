@@ -83,10 +83,10 @@ public class BugReportGenerator {
 				list.forEach(cl->
 				{
 					BugReport bug = (BugReport)cl.getAnnotation(BugReport.class);
-					wr.println("\t"+REPORTED_BY+bug.reportedBy());
-					wr.println("\t"+CLASS_NAME+cl.getName());
-					wr.println("\t"+DESCRIPTION+bug.description());
-					wr.println("\t"+SEVERITY+bug.severity());
+					wr.println("  "+REPORTED_BY+bug.reportedBy());
+					wr.println("  "+CLASS_NAME+cl.getName());
+					wr.println("  "+DESCRIPTION+bug.description());
+					wr.println("  "+SEVERITY+bug.severity());
 					wr.println();
 				});
 				
