@@ -31,19 +31,22 @@ public class GuestListJava8 {
 		else return true;
 	}
 	
-	public boolean unchecked(Guest g) {
-		try {
-			return checkLegal(g);
-		} catch(Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
 	
 	public void printListOfExpectedFemaleGuests(List<Guest> invited) {
 		
+		class CheckLegal implements PredicateWithException<Guest>
+		{
+
+			@Override
+			public boolean test(Guest t) throws Exception {
+				return checkLegal(t);
+			}
+			
+		}
 		//implement
 		List<String> list=invited.stream()
-			.filter(g->unchecked(g) && g.getGender()==Gender.F && g.isPlanningToCome())
+			.filter(g->PredicateWithException.unchecked(new CheckLegal()).test(g))
+			.filter(g->g.getGender()==Gender.F && g.isPlanningToCome())
 			.map(g->g.getName())
 			.collect(Collectors.toList());
 		System.out.println(list);
