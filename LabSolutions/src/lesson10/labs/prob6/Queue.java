@@ -9,6 +9,8 @@ public class Queue {
 	}
 	private Node head;
 	private Node tail;
+
+	// not threadsafe
 	public void add(Object newValue) {
 		Node n = new Node();
 		if(head == null) head = n;
@@ -16,6 +18,8 @@ public class Queue {
 		tail = n;
 		tail.value = newValue;
 	}
+
+	//not threadsafe
 	public Object remove() {
 		if(head == null) return null;
 		Node n = head;
