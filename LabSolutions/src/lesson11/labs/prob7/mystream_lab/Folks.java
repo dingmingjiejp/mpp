@@ -19,7 +19,7 @@ public class Folks {
     public static
 
   final List<String> editors = 
-    Arrays.asList("Brian", "Jackie", "John", "Mike");
+    Arrays.asList("Nate","Brian", "Jackie", "John", "Mike");
 
 public static
 

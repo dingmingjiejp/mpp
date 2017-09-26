@@ -11,7 +11,7 @@ public class Good {
 				+ " with 'N': "+ good.findStartsWithLetter(Folks.friends, "N")));
 		
 		System.out.println(String.format("Editors with names that start"
-				+ " with 'N'", good.findStartsWithLetter(Folks.editors, "N")));
+				+ " with 'N'"+good.findStartsWithLetter(Folks.editors, "N")));
 	}
 	
 	public List<String> findStartsWithLetter(List<String> list, String letter) {
