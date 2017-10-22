@@ -1,13 +1,11 @@
 package ui;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 
-import business.Book;
-import business.BookCopy;
-import business.CheckOutRecordEntry;
 import business.ControllerFactory;
 import business.ControllerInterface;
-import business.LibraryMember;
 import business.Overdue;
 import business.ValidationException;
 import dataaccess.User;
@@ -18,19 +16,22 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 
 public class OverdueWindow extends Stage implements LibWindow{
 
@@ -124,37 +125,6 @@ public class OverdueWindow extends Stage implements LibWindow{
 	private void searchForOverdue(String isbn) {
 		ControllerInterface controller = ControllerFactory.of();
 		HashMap<String, Overdue> overdues = controller.getOverdues(isbn);
-//		ControllerInterface controller = ControllerFactory.of();
-//		HashMap<String, Overdue> overdues = new HashMap<String, Overdue>();
-//
-//		HashMap<String, Book> books = controller.getBooksMap();
-//		books.forEach((r,v) -> {
-//			for(BookCopy copy: v.getCopies()) {
-//				if(copy.isAvailable()) {
-//					Overdue o = new Overdue(copy);
-//					overdues.put(o.getKey(), o);
-////					tbv.getItems().add(o);
-//				}
-//			}
-//        });
-//
-//		HashMap<String, LibraryMember> members  = controller.getMembersMap();
-//		members.forEach((r,v) -> {
-//			for(CheckOutRecordEntry entry: v.getCheckOutRecord().getEntryList()) {
-//				String entryKey = Overdue.generateKey(entry.getBookCopy());
-//				if(overdues.containsKey(entryKey)) {
-//					if(!overdues.get(entryKey).getEntry().getBookCopy().isAvailable()) {
-//						if(entry.getCheckOutDate().isAfter(overdues.get(entryKey).getEntry().getCheckOutDate())) {
-//							Overdue o = new Overdue(entry);
-//							overdues.put(o.getKey(), o);
-//						}
-//					}
-//				} else {
-//					Overdue o = new Overdue(entry);
-//					overdues.put(o.getKey(), o);
-//				}
-//			}
-//        });
 		refreshOverdueList();
 
     	if (tbv != null) {
@@ -220,8 +190,38 @@ public class OverdueWindow extends Stage implements LibWindow{
             String cellValue = rowValue.displayDueDate();
             return new ReadOnlyStringWrapper(cellValue);
         });
+        colDueDate.setCellFactory(new Callback<TableColumn<Overdue, String>, TableCell<Overdue, String>>() {
+            public TableCell<Overdue, String> call(TableColumn<Overdue, String> param) {
+                return new TableCell<Overdue, String>() {
+                    @Override
+                    public void updateItem(String item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty || item == null) {
+                            setText(null);
+                            setTextFill(null);
+                            return;
+                        } else if (!item.isEmpty()) {
+                        	if(LocalDate.now().isAfter(LocalDate.parse(item, DateTimeFormatter.ofPattern("d/MM/uuuu")))) {
+                        		this.setTextFill(Color.RED);
+                        	} else {
+                        		this.setTextFill(Color.GREEN);
+                        	}
+                        }
+                        setText(item);
+                    }
+                };
+            }
+        });
         table.getColumns().add(colDueDate);
 
+        TableColumn<Overdue, String> colDueDays = new TableColumn<>("Due days");
+        colDueDays.setMinWidth(50);
+        colDueDays.setCellValueFactory(data -> {
+        	Overdue rowValue = data.getValue();
+            String cellValue = rowValue.displayDueDays();
+            return new ReadOnlyStringWrapper(cellValue);
+        });
+        table.getColumns().add(colDueDays);
 
         table.setPrefSize(600, 400);
         table.setColumnResizePolicy((param) -> true );

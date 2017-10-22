@@ -78,9 +78,8 @@ public class DataAccessFacade implements DataAccess {
 		members.forEach((r,v) -> {
 			for(CheckOutRecordEntry entry: v.getCheckOutRecord().getEntryList()) {
 				// skip if it is not the searched book
-				if(!entry.getBookCopy().getBook().equals(book)) {
+				if(!entry.getBookCopy().getBook().equals(book))
 					continue;
-				}
 
 				// generate the unique key for isbn & copyNum
 				String entryKey = Overdue.generateKey(entry.getBookCopy());
