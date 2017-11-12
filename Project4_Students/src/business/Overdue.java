@@ -12,9 +12,10 @@ public class Overdue {
 		this.entry = new CheckOutRecordEntry(bookCopy);
 	}
 
-	public Overdue(CheckOutRecordEntry entry) {
+	public Overdue(CheckOutRecordEntry entry, LibraryMember member) {
 		this.entryKey = generateKey(entry.getBookCopy());
 		this.entry = entry;
+		this.member = member;
 	}
 
 	public LibraryMember getMember() {

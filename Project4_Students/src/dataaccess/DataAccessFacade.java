@@ -88,11 +88,11 @@ public class DataAccessFacade implements DataAccess {
 				if(overdues.containsKey(entryKey)) {
 					// check if it is the latest checkoutrecordentry
 					if(entry.getCheckOutDate().isAfter(overdues.get(entryKey).getEntry().getCheckOutDate())) {
-						Overdue o = new Overdue(entry);
+						Overdue o = new Overdue(entry, v);
 						overdues.put(o.getKey(), o);
 					}
 				} else {
-					Overdue o = new Overdue(entry);
+					Overdue o = new Overdue(entry, v);
 					overdues.put(o.getKey(), o);
 				}
 			}

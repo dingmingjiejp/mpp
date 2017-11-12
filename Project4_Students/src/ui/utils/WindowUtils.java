@@ -115,7 +115,7 @@ public final class WindowUtils {
 
         table.getColumns().add(colCheckOutDate);
 
-        TableColumn<CheckOutRecordEntry, String> colDueDate = new TableColumn<>("check out date");
+        TableColumn<CheckOutRecordEntry, String> colDueDate = new TableColumn<>("due date");
         colDueDate.setMinWidth(120);
         colDueDate.setCellValueFactory(data ->
                 new ReadOnlyStringWrapper(String.valueOf(data.getValue().getDueDate().format(DateTimeFormatter.BASIC_ISO_DATE)))
